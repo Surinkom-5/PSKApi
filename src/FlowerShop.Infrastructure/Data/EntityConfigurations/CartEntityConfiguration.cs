@@ -11,15 +11,17 @@ namespace FlowerShop.Infrastructure.Data.Config
             builder.HasKey(x => x.CartId);
 
             builder.HasOne(x => x.User)
-                .WithMany(x => x.Carts)
-                .HasForeignKey(x => x.UserId)
+                .WithOne(x => x.Cart)
+                .HasForeignKey<User>(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(f => f.Bouquets)
-                .WithMany(f => f.Carts);
+            builder.Property(x => x.Price)
+                .IsRequired();
 
-            builder.HasMany(f => f.Flowers)
-                .WithMany(f => f.Carts);
+            builder.HasMany(x => x.CartItems)
+                .WithOne(x => x.Cart)
+                .HasForeignKey(x => x.CartItemId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -6,11 +6,13 @@ namespace FlowerShop.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Flower> Flowers { get; set; }
-        public DbSet<Bouquet> Bouquets { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<FlowersBouquet> FlowersBouquets { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         public AppDbContext(DbContextOptions options) : base(options)
         {
@@ -20,10 +22,12 @@ namespace FlowerShop.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            new FlowerEntityConfiguration().Configure(modelBuilder.Entity<Flower>());
-            new BouquetEntityConfiguration().Configure(modelBuilder.Entity<Bouquet>());
+            new AddressEntityConfiguration().Configure(modelBuilder.Entity<Address>());
             new CartEntityConfiguration().Configure(modelBuilder.Entity<Cart>());
-            new FlowersBouquetEntityConfiguration().Configure(modelBuilder.Entity<FlowersBouquet>());
+            new CartItemEntityConfiguration().Configure(modelBuilder.Entity<CartItem>());
+            new OrderEntityConfiguration().Configure(modelBuilder.Entity<Order>());
+            new OrderItemEntityConfiguration().Configure(modelBuilder.Entity<OrderItem>());
+            new ProductEntityConfiguration().Configure(modelBuilder.Entity<Product>());
             new UserEntityConfiguration().Configure(modelBuilder.Entity<User>());
         }
     }

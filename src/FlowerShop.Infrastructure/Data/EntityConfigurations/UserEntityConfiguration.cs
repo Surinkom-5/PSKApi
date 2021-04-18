@@ -10,10 +10,29 @@ namespace FlowerShop.Infrastructure.Data.Config
         {
             builder.HasKey(x => x.UserId);
 
-            builder.HasIndex(x => x.Email).IsUnique();
+            builder.HasIndex(x => x.Email)
+                .IsUnique();
+
             builder.Property(x => x.Email)
                 .HasMaxLength(64)
                 .IsRequired();
+
+            builder.Property(x => x.Name)
+                .HasMaxLength(64)
+                .IsRequired();
+
+            builder.Property(x => x.PhoneNumber)
+                .HasMaxLength(16);
+
+            builder.HasMany(x => x.Addresses)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Cart)
+                .WithOne(x => x.User)
+                .HasForeignKey<Cart>(x => x.CartId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,22 +1,23 @@
 ﻿using FlowerShop.Infrastructure;
+using FlowerShop.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace FlowerShop.Web
 {
     public class Startup
     {
-        private readonly IWebHostEnvironment _env;
 
-        public Startup(IConfiguration config, IWebHostEnvironment env)
+        public Startup(IConfiguration config)
         {
             Configuration = config;
-            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,19 +32,27 @@ namespace FlowerShop.Web
 
             services.AddDbContext(Configuration.GetConnectionString("SqliteConnection"));
 
-            services.AddControllersWithViews().AddNewtonsoftJson();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
                 c.EnableAnnotations();
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddScoped<IFlowerRepository, FlowerRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
 
             app.UseRouting();

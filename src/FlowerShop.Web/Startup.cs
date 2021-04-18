@@ -35,6 +35,13 @@ namespace FlowerShop.Web
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
+            //Register repositories
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            //Register Services
+            services.AddScoped<IProductService, ProductService>();
+
+            //Configure swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
@@ -45,9 +52,6 @@ namespace FlowerShop.Web
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductService, ProductService>();
             services.AddSwaggerGenNewtonsoftSupport();
         }
 

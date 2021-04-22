@@ -1,7 +1,5 @@
 ﻿using FlowerShop.Web.Api;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FlowerShop.Infrastructure;
 using Microsoft.Extensions.Logging;
@@ -35,7 +33,6 @@ namespace FlowerShop.Web.Controllers
                 var order = await _orderReprository.GetOrderByIdAsync(orderId);
 
                 return order is null ? NotFound() : Ok(OrderViewModel.ToModel(order));
-
             }
             catch (Exception e)
             {
@@ -45,7 +42,7 @@ namespace FlowerShop.Web.Controllers
         }
 
         /// <summary>
-        /// Gets orders by provided user Id
+        /// Gets order list by provided user Id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
@@ -65,6 +62,5 @@ namespace FlowerShop.Web.Controllers
                 return BadRequest();
             }
         }
-
     }
 }

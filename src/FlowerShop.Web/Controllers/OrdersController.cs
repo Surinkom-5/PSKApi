@@ -28,7 +28,7 @@ namespace FlowerShop.Web.Controllers
         /// <param name="orderId"></param>
         /// <returns></returns>
         [HttpGet("{orderId}")]
-        public async Task<IActionResult> GetProductByOrderIdAsync([FromRoute] int orderId)
+        public async Task<IActionResult> GetOrderByOrderIdAsync([FromRoute] int orderId)
         {
             try
             {
@@ -43,5 +43,28 @@ namespace FlowerShop.Web.Controllers
                 return BadRequest();
             }
         }
+
+        /// <summary>
+        /// Gets orders by provided user Id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetOrdersByUserIdAsync(int userId)
+        {
+            try
+            {
+                var order = await _orderReprository.GetOrdersByUserIdAsync(userId);
+
+                return order is null ? NotFound() : Ok(OrderViewModel.ToModel(order));
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occured in Order Controller, get orders by user id");
+                return BadRequest();
+            }
+        }
+
     }
 }

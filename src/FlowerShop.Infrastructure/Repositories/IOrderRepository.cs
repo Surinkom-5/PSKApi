@@ -10,5 +10,7 @@ namespace FlowerShop.Infrastructure
     public interface IOrderRepository
     {
         public Task<Order> GetOrderByIdAsync(int orderId);
+
+        public Task<List<Order>> GetOrdersByUserIdAsync(int userId);
     }
 }

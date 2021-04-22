@@ -3,6 +3,7 @@ using FlowerShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using System;
 
 namespace FlowerShop.Infrastructure
@@ -18,7 +19,12 @@ namespace FlowerShop.Infrastructure
 
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
-            return await _dbContext.Orders.FirstOrDefaultAsync(x => x.OrderId == orderId);
+            return await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+        }
+
+        public async Task<List<Order>> GetOrdersByUserIdAsync(int userId)
+        {
+            return await _dbContext.Orders.Where(o => o.UserId == userId).ToListAsync();
         }
     }
 }

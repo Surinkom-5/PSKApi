@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 
-namespace FlowerShop.Infrastructure.Repositories
+namespace FlowerShop.Infrastructure
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly AppDbContext _dbContext;
 

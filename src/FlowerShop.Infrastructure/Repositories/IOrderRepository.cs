@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlowerShop.Infrastructure.Repositories
+namespace FlowerShop.Infrastructure
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
         public Task<Order> GetOrderByIdAsync(int orderId);
     }

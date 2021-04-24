@@ -70,15 +70,15 @@ namespace FlowerShop.Web.Controllers
         /// <summary>
         /// Creates product
         /// </summary>
-        /// <param name="createProductViewModel"></param>
+        /// <param name="createProductModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductModel createProductViewModel)
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductModel createProductModel)
         {
             try
             {
-                await _productService.CreateProductAsync(createProductViewModel.Name, createProductViewModel.Price,
-                    createProductViewModel.Description, createProductViewModel.ProductType);
+                await _productService.CreateProductAsync(createProductModel.Name, createProductModel.Price,
+                    createProductModel.Description, createProductModel.ProductType);
 
                 return Ok();
             }

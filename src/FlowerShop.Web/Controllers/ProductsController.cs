@@ -46,21 +46,23 @@ namespace FlowerShop.Web.Controllers
         }
 
         /// <summary>
-        /// Gets all products 
+        /// Gets all filtered products if no filtering parameters are given returns all products
         /// </summary>
+        /// <param name="productFiltersModel">Query filters</param>
         /// <returns></returns>
         [HttpGet()]
-        public async Task<IActionResult> GetProductsAsync()
+        public async Task<IActionResult> GetProductsAsync([FromQuery] ProductFiltersModel productFiltersModel)
         {
             try
             {
-                var product = await _productRepository.GetProductsAsync();
+                var product = await _productRepository.GetProductsByFiltersAsync(productFiltersModel.SearchText,
+                    productFiltersModel.ProductType);
 
                 return product is null ? NotFound() : Ok(ProductViewModel.ToModel(product));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception Occured in Product Controller, get product");
+                _logger.LogError(ex, "Exception Occured in Product Controller, GetProductsAsync");
                 return BadRequest();
             }
         }
@@ -71,7 +73,7 @@ namespace FlowerShop.Web.Controllers
         /// <param name="createProductViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductViewModel createProductViewModel)
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductModel createProductViewModel)
         {
             try
             {
@@ -82,7 +84,7 @@ namespace FlowerShop.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Exception Occured in Product Controller, create product");
+                _logger.LogError(ex, "Exception Occured in Product Controller, CreateProductAsync");
                 return BadRequest();
             }
         }

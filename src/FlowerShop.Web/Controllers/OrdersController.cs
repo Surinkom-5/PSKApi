@@ -1,10 +1,10 @@
-﻿using FlowerShop.Web.Api;
+﻿using FlowerShop.Infrastructure;
+using FlowerShop.Web.Api;
+using FlowerShop.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using FlowerShop.Infrastructure;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc;
-using FlowerShop.Web.Models;
 
 namespace FlowerShop.Web.Controllers
 {
@@ -47,7 +47,7 @@ namespace FlowerShop.Web.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetOrdersByUserIdAsync(int userId)
+        public async Task<IActionResult> GetOrdersByUserIdAsync([FromQuery] int userId)
         {
             try
             {

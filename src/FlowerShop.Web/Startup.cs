@@ -30,7 +30,7 @@ namespace FlowerShop.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext(Configuration.GetConnectionString("SqliteConnection"));
+            services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.Converters.Add(new StringEnumConverter()));

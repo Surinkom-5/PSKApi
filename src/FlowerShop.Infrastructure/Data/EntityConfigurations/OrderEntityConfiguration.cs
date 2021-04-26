@@ -16,6 +16,7 @@ namespace FlowerShop.Infrastructure.Data.Config
                .IsRequired();
 
             builder.Property(x => x.TotalPrice)
+                .HasColumnType("decimal(18,4)")
                .IsRequired();
 
             builder.Property(x => x.OrderStatus)

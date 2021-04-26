@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlowerShop.Web.Models
 {
-    public class CreateProductViewModel
+    public class CreateProductModel
     {
         [Required]
         [StringLength(64)]

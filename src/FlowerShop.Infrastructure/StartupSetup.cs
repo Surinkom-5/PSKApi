@@ -4,10 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FlowerShop.Infrastructure
 {
-	public static class StartupSetup
-	{
-		public static void AddDbContext(this IServiceCollection services, string connectionString) =>
-			services.AddDbContext<AppDbContext>(options =>
-				options.UseSqlite(connectionString));
-	}
+    public static class StartupSetup
+    {
+        public static void AddDbContext(this IServiceCollection services, string connectionString) =>
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(connectionString));
+    }
 }

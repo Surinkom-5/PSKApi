@@ -1,7 +1,10 @@
 ﻿using FlowerShop.Core.Entities;
+using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.Data;
+using FlowerShop.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure
@@ -20,9 +23,17 @@ namespace FlowerShop.Infrastructure
             return await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == productId);
         }
 
-        public async Task<List<Product>> GetProductsAsync()
+        public async Task<List<Product>> GetProductsByFiltersAsync(string searchText, ProductType? productType)
         {
-            return await _dbContext.Products.ToListAsync();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                searchText = SearchQueryHelper.FormatSearchQuery(searchText);
+            }
+
+            return await _dbContext.Products
+                .Where(x => (searchText == null || EF.Functions.Contains(x.Name, searchText)) &&
+                            (productType == null || x.ProductType == productType))
+                .ToListAsync();
         }
     }
 }

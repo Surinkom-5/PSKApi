@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using FlowerShop.Infrastructure.Repositories.Interfaces;
 
 namespace FlowerShop.Infrastructure
 {

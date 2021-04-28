@@ -9,6 +9,6 @@ namespace FlowerShop.Infrastructure.Repositories.Interfaces
 {
     public interface IShoppingCartRepository
     {
-        public Task<Cart> GetCartByIdAsync(int id);
+        public Task<Cart> GetCartByPublicIdAsync(string id);
     }
 }

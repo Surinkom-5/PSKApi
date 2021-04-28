@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FlowerShop.Core.Entities
 {
@@ -8,6 +9,7 @@ namespace FlowerShop.Core.Entities
         public decimal Price { get; private set; }
         public int? UserId { get; private set; }
         public User User { get; private set; }
+        public Guid PublicId { get; private set; }
 
         private readonly List<CartItem> _cartItems = new();
         public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
@@ -16,5 +18,11 @@ namespace FlowerShop.Core.Entities
         {
         }
 
+        public Cart(decimal price, int? userId, Guid publicId)
+        {
+            Price = price;
+            UserId = userId;
+            PublicId = publicId;
+        }
     }
 }

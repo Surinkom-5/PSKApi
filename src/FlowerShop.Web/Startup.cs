@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using FlowerShop.Infrastructure.Repositories;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
+using FlowerShop.Infrastructure.Services.Interfaces;
 
 namespace FlowerShop.Web
 {
@@ -44,6 +45,7 @@ namespace FlowerShop.Web
 
             //Register Services
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
             //Configure swagger
             services.AddSwaggerGen(c =>

@@ -31,7 +31,7 @@ namespace FlowerShop.Web.Controllers
         }
 
         /// <summary>
-        /// Gets shopping cart by provided Id
+        /// Gets shopping cart
         /// </summary>
         /// <returns></returns>
         [HttpGet]

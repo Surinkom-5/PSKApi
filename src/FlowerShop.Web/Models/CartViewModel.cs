@@ -15,12 +15,12 @@ namespace FlowerShop.Web.Models
 
         public static CartViewModel ToModel(Cart cart)
         {
-            return new CartViewModel()
+            return new()
             {
                 CartId = cart.CartId,
                 Price = cart.Price,
                 UserId = cart.UserId,
-                CartItems = cart.CartItems.Select(i => CartItemViewModel.ToModel(i)).ToList()
+                CartItems = cart.CartItems.Select(CartItemViewModel.ToModel).ToList()
             };
         }
     }

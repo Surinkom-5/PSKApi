@@ -66,7 +66,7 @@ namespace FlowerShop.Infrastructure.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    CartId = table.Column<int>(type: "int", nullable: false),
+                    CartId = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<double>(type: "float", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },

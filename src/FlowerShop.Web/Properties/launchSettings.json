@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/FlowerShop.Web",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:57678/",
       "sslPort": 0
@@ -13,7 +17,9 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "sqlDebugging": true,
+      "nativeDebugging": true
     },
     "FlowerShop.Web": {
       "commandName": "Project",
@@ -21,6 +27,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
+      "sqlDebugging": true,
+      "nativeDebugging": true,
       "applicationUrl": "http://localhost:57679/"
     }
   }

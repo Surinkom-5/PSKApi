@@ -8,14 +8,14 @@ namespace FlowerShop.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<CartItem> builder)
         {
-            builder.HasKey(x => x.CartItemId);
+            builder.HasKey(x => new { x.CartId, x.ProductId});
 
             builder.Property(x => x.Quantity)
                 .IsRequired();
 
             builder.HasOne(x => x.Cart)
                 .WithMany(x => x.CartItems)
-                .HasForeignKey(x => x.CartId)
+                .HasPrincipalKey(x => x.CartId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

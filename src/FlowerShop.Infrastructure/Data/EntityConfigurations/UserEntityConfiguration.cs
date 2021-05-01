@@ -28,11 +28,6 @@ namespace FlowerShop.Infrastructure.Data.Config
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(x => x.Cart)
-                .WithOne(x => x.User)
-                .HasForeignKey<Cart>(x => x.CartId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

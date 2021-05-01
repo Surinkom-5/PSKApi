@@ -14,7 +14,6 @@ namespace FlowerShop.Core.Entities
         private readonly List<Address> _addresses = new();
         public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
 
-        public int? CartId { get; private set;}
         public Cart Cart { get; private set;}
 
         private readonly List<Order> _orders = new();

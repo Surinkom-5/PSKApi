@@ -54,7 +54,7 @@ namespace FlowerShop.Web.Controllers
 
                     if (cart is null) return StatusCode(500);
 
-                    Response.Cookies.Append("cartCookie", cart.PublicId.ToString());
+                    Response.Headers.Add("cartCookie", cart.PublicId.ToString());
                     return Ok(CartViewModel.ToModel(cart));
                 }
 

@@ -17,7 +17,6 @@ namespace FlowerShop.Web.Models
         {
             return new CartItemViewModel()
             {
-                CartItemId = item.CartItemId,
                 Quantity = item.Quantity,
                 CartId = item.CartId,
                 ProductId = item.ProductId

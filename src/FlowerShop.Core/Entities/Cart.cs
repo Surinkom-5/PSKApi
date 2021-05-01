@@ -5,7 +5,7 @@ namespace FlowerShop.Core.Entities
     public class Cart
     {
         public int CartId { get; private set; }
-        public double Price { get; private set; }
+        public decimal Price { get; private set; }
         public int? UserId { get; private set; }
         public User User { get; private set; }
 

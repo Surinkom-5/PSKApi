@@ -10,17 +10,12 @@ namespace FlowerShop.Infrastructure.Data.Config
         {
             builder.HasKey(x => x.CartId);
 
-            builder.HasOne(x => x.User)
-                .WithOne(x => x.Cart)
-                .HasForeignKey<User>(x => x.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.Property(x => x.Price)
+                .HasColumnType("decimal(18,4)")
                 .IsRequired();
 
             builder.HasMany(x => x.CartItems)
                 .WithOne(x => x.Cart)
-                .HasForeignKey(x => x.CartItemId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

@@ -1,8 +1,6 @@
-﻿using System;
-using FlowerShop.Core.Entities;
+﻿using FlowerShop.Core.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlowerShop.Web.Models
 {

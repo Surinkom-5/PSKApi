@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FlowerShop.Core.Entities;
+﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data;
-using FlowerShop.Infrastructure.Helpers;
 using FlowerShop.Infrastructure.Services.Interfaces;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure.Services
 {
@@ -20,7 +16,7 @@ namespace FlowerShop.Infrastructure.Services
         }
         public async Task<Cart> CreateCart()
         {
-            var cart = new Cart(0, null, Guid.NewGuid());
+            var cart = new Cart(0);
             var createdCart = await _dbContext.AddAsync(cart);
             await _dbContext.SaveChangesAsync();
             return createdCart.Entity;
@@ -40,7 +36,10 @@ namespace FlowerShop.Infrastructure.Services
             var cart = await _dbContext.Carts.FindAsync(cartId);
             var itemToDelete = cart.CartItems.FirstOrDefault(i => i.ProductId == itemId);
 
-            if (itemToDelete == null) return false;
+            if (itemToDelete == null)
+            {
+                return false;
+            }
 
             var result = _dbContext.CartItems.Remove(itemToDelete);
             await _dbContext.SaveChangesAsync();

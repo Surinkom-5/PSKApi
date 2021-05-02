@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FlowerShop.Core.Entities;
+﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure.Repositories
 {

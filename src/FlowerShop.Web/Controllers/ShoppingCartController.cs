@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FlowerShop.Infrastructure;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
-using FlowerShop.Infrastructure.Services;
+﻿using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Models;
 using FlowerShop.Web.Patch;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlowerShop.Web.Controllers
 {
@@ -23,7 +19,9 @@ namespace FlowerShop.Web.Controllers
         private readonly IShoppingCartService _shoppingCartService;
 
 
-        public ShoppingCartController(ILogger<ProductsController> logger, IShoppingCartRepository shoppingCartRepository, IShoppingCartService shoppingCartService)
+        public ShoppingCartController(ILogger<ProductsController> logger,
+            IShoppingCartRepository shoppingCartRepository,
+            IShoppingCartService shoppingCartService)
         {
             _logger = logger;
             _shoppingCartRepository = shoppingCartRepository;
@@ -40,7 +38,7 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 // If user has "cartCookie" header value
-                if (Request.Headers.TryGetValue("cartCookie", out StringValues headerValues))
+                if (Request.Headers.TryGetValue(Constants.CartCookie, out StringValues headerValues))
                 {
                     var cartCookie = headerValues.FirstOrDefault();
                     var cart = await _shoppingCartRepository.GetCartByPublicIdAsync(cartCookie);
@@ -54,7 +52,7 @@ namespace FlowerShop.Web.Controllers
 
                     if (cart is null) return StatusCode(500);
 
-                    Response.Headers.Add("cartCookie", cart.PublicId.ToString());
+                    Response.Headers.Add(Constants.CartCookie, cart.PublicId.ToString());
                     return Ok(CartViewModel.ToModel(cart));
                 }
 
@@ -81,7 +79,7 @@ namespace FlowerShop.Web.Controllers
                 if (!Request.Headers.TryGetValue("cartCookie", out StringValues headerValues)) return BadRequest();
                 if (body == null) return BadRequest();
 
-                
+
                 var cartCookie = headerValues.FirstOrDefault();
                 var result = await _shoppingCartService.AddItemToCart(cartCookie, body.productId, body.quantity);
 

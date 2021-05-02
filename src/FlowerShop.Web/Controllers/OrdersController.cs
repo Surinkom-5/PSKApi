@@ -1,11 +1,10 @@
-﻿using FlowerShop.Infrastructure;
+﻿using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
 
 namespace FlowerShop.Web.Controllers
 {

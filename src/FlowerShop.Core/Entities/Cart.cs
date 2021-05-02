@@ -14,15 +14,14 @@ namespace FlowerShop.Core.Entities
         private readonly List<CartItem> _cartItems = new();
         public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
 
-        private Cart() 
+        private Cart()
         {
         }
 
-        public Cart(decimal price, int? userId, Guid publicId)
+        public Cart(decimal price)
         {
             Price = price;
-            UserId = userId;
-            PublicId = publicId;
+            PublicId = Guid.NewGuid();
         }
     }
 }

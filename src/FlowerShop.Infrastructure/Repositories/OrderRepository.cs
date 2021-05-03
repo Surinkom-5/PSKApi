@@ -2,8 +2,8 @@
 using FlowerShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure
 {

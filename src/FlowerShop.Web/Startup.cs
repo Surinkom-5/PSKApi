@@ -38,9 +38,11 @@ namespace FlowerShop.Web
             //Register repositories
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
 
             //Register Services
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAddressService, AddressService>();
 
             //Configure swagger
             services.AddSwaggerGen(c =>

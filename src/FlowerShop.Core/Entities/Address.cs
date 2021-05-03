@@ -13,5 +13,19 @@
         {
         }
 
+        public Address(int userId, string street, string city, string postalCode)
+        {
+            UserId = userId;
+            Street = street;
+            City = city;
+            PostalCode = postalCode;
+        }
+
+        public void ChangeAddress(string street, string city, string postalCode)
+        {
+            Street = street;
+            City = city;
+            PostalCode = postalCode;
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace FlowerShop.Core.Entities
         private readonly List<CartItem> _cartItems = new();
         public IReadOnlyCollection<CartItem> CartItems => _cartItems.AsReadOnly();
 
-        private Cart() 
+        private Cart()
         {
         }
 

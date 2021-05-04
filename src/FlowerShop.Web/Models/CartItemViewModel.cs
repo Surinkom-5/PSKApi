@@ -1,11 +1,12 @@
-﻿using FlowerShop.Core.Entities;
+﻿using System;
+using FlowerShop.Core.Entities;
 
 namespace FlowerShop.Web.Models
 {
     public class CartItemViewModel
     {
         public int Quantity { get; private set; }
-        public int CartId { get; private set; }
+        public Guid CartId { get; private set; }
         public int ProductId { get; private set; }
 
         public static CartItemViewModel ToModel(CartItem item)

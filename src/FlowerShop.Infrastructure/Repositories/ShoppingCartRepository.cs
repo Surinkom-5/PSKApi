@@ -17,7 +17,9 @@ namespace FlowerShop.Infrastructure.Repositories
 
         public async Task<Cart> GetCartByPublicIdAsync(string id)
         {
-            return await _dbContext.Carts.FirstOrDefaultAsync(c => c.PublicId.ToString() == id);
+            var cart = await _dbContext.Carts.FirstOrDefaultAsync(c => c.Id.ToString() == id);
+            await _dbContext.Entry(cart).Collection(c => c.CartItems).LoadAsync();
+            return cart;
         }
     }
 }

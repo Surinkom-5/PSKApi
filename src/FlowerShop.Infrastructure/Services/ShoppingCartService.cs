@@ -1,4 +1,5 @@
-﻿using FlowerShop.Core.Entities;
+﻿using System;
+using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using System.Linq;
@@ -24,8 +25,8 @@ namespace FlowerShop.Infrastructure.Services
 
         public async Task<bool> AddItemToCart(string cartId, int itemId, int quantity)
         {
-            var cart = await _dbContext.Carts.FindAsync(cartId);
-            var cartItem = new CartItem(cart.CartId, itemId, quantity);
+            var cart = await _dbContext.Carts.FindAsync(Guid.Parse(cartId));
+            var cartItem = new CartItem(cart.Id, itemId, quantity);
             var result = await _dbContext.CartItems.AddAsync(cartItem);
             await _dbContext.SaveChangesAsync();
             return result != null;
@@ -33,8 +34,7 @@ namespace FlowerShop.Infrastructure.Services
 
         public async Task<bool> RemoveItemFromCart(string cartId, int itemId)
         {
-            var cart = await _dbContext.Carts.FindAsync(cartId);
-            var itemToDelete = cart.CartItems.FirstOrDefault(i => i.ProductId == itemId);
+            var itemToDelete = _dbContext.CartItems.FirstOrDefault(i => i.CartId == Guid.Parse(cartId) && i.ProductId == itemId);
 
             if (itemToDelete == null)
             {

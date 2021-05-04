@@ -1,4 +1,5 @@
-﻿using FlowerShop.Core.Entities;
+﻿using System;
+using FlowerShop.Core.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace FlowerShop.Web.Models
 {
     public class CartViewModel
     {
-        public int CartId { get; set; }
+        public Guid CartId { get; set; }
         public decimal Price { get; set; }
         public int? UserId { get; set; }
         public List<CartItemViewModel> CartItems { get; set; }
@@ -15,7 +16,7 @@ namespace FlowerShop.Web.Models
         {
             return new()
             {
-                CartId = cart.CartId,
+                CartId = cart.Id,
                 Price = cart.Price,
                 UserId = cart.UserId,
                 CartItems = cart.CartItems.Select(CartItemViewModel.ToModel).ToList()

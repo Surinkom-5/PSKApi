@@ -15,7 +15,7 @@ namespace FlowerShop.Infrastructure.Data.Config
 
             builder.HasOne(x => x.Cart)
                 .WithMany(x => x.CartItems)
-                .HasPrincipalKey(x => x.CartId)
+                .HasPrincipalKey(x => x.Id)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

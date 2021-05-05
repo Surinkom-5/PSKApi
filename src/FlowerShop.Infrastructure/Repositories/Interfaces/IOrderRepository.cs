@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlowerShop.Infrastructure
+namespace FlowerShop.Infrastructure.Repositories.Interfaces
 {
     public interface IOrderRepository
     {

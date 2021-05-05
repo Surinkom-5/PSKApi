@@ -8,7 +8,7 @@ namespace FlowerShop.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.HasKey(x => new { x.OrderId, x.ProductId});
+            builder.HasKey(x => new { x.OrderId, x.ProductId });
 
             builder.Property(x => x.Quantity)
                 .IsRequired();

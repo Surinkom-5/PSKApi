@@ -42,10 +42,13 @@ namespace FlowerShop.Web
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             //Register Services
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
+            services.AddScoped<IAddressService, AddressService>();
 
             //Configure swagger
             services.AddSwaggerGen(c =>

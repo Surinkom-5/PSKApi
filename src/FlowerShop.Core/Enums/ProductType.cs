@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace FlowerShop.Core.Enums
+﻿namespace FlowerShop.Core.Enums
 {
     public enum ProductType
     {

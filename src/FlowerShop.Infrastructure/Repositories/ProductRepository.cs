@@ -1,13 +1,14 @@
-﻿using FlowerShop.Core.Entities;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FlowerShop.Core.Entities;
 using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Helpers;
+using FlowerShop.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FlowerShop.Infrastructure
+namespace FlowerShop.Infrastructure.Repositories
 {
     public class ProductRepository : IProductRepository
     {

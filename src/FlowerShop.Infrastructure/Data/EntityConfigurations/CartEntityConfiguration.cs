@@ -8,7 +8,7 @@ namespace FlowerShop.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
-            builder.HasKey(x => x.CartId);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Price)
                 .HasColumnType("decimal(18,4)")

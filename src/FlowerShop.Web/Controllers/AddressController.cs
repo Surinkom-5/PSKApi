@@ -13,15 +13,18 @@ namespace FlowerShop.Web.Controllers
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IAddressService _addressService;
+        private readonly IUserRepository _userRepository;
         private readonly ILogger<OrdersController> _logger;
 
         public AddressController(
             ILogger<OrdersController> logger,
             IAddressRepository addressRepository,
+            IUserRepository userRepository,
             IAddressService addressService)
         {
             _logger = logger;
             _addressRepository = addressRepository;
+            _userRepository = userRepository;
             _addressService = addressService;
         }
 
@@ -35,7 +38,7 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 //TODO When adding user auth pass userId
-                const int userId = 1;
+                var userId = await _userRepository.GetFirstUserIdAsync();
 
                 var addresses = await _addressRepository.GetUserAddressesAsync(userId);
 
@@ -59,7 +62,7 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 //TODO When adding user auth pass userId
-                const int userId = 1;
+                var userId = await _userRepository.GetFirstUserIdAsync();
 
                 await _addressService.AddNewAddressAsync(userId, addressModel.Street, addressModel.City, addressModel.PostalCode);
 

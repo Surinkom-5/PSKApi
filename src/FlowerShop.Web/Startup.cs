@@ -43,6 +43,7 @@ namespace FlowerShop.Web
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             //Register Services
             services.AddScoped<IProductService, ProductService>();

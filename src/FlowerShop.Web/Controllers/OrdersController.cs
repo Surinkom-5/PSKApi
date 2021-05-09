@@ -54,7 +54,6 @@ namespace FlowerShop.Web.Controllers
                 var order = await _orderReprository.GetOrdersByUserIdAsync(userId);
 
                 return order is null ? NotFound() : Ok(OrderViewModel.ToModel(order));
-
             }
             catch (Exception e)
             {

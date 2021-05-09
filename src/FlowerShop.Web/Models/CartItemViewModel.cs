@@ -1,5 +1,5 @@
-﻿using System;
-using FlowerShop.Core.Entities;
+﻿using FlowerShop.Core.Entities;
+using System;
 
 namespace FlowerShop.Web.Models
 {

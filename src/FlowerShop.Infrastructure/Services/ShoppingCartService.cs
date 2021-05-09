@@ -1,7 +1,7 @@
-﻿using System;
-using FlowerShop.Core.Entities;
+﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Services.Interfaces;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +15,7 @@ namespace FlowerShop.Infrastructure.Services
         {
             _dbContext = dbContext;
         }
+
         public async Task<Cart> CreateCart()
         {
             var cart = new Cart(0);

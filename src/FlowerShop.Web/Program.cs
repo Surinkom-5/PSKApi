@@ -49,6 +49,5 @@ namespace FlowerShop.Web
                     // logging.AddAzureWebAppDiagnostics(); add this if deploying to Azure
                 });
             });
-
     }
 }

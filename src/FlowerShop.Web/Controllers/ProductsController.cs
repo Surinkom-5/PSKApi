@@ -91,7 +91,7 @@ namespace FlowerShop.Web.Controllers
         }
 
         /// <summary>
-        /// Update address
+        /// Update product details
         /// </summary>
         /// <returns></returns>
         [HttpPatch("{productId}")]
@@ -99,9 +99,6 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                //TODO auth user permissions
-
-                // var success = await _addressService.UpdateAddressAsync(addressId, addressModel.Street, addressModel.City, addressModel.PostalCode);
                 var success = await _productService.UpdateProductAsync(productId, productPatch.Name, productPatch.Price, productPatch.Description, productPatch.Quantity);
 
                 return success ? Ok() : NotFound();

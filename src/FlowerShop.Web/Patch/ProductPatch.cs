@@ -7,7 +7,6 @@ namespace FlowerShop.Web.Patch
 {
     public class ProductPatch
     {
-        public int ProductId { get; set; }
         public int? Quantity { get; set; }
         public String Description { get; set; }
         public String Name { get; set; }

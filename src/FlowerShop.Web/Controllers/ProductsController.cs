@@ -1,7 +1,8 @@
-﻿using FlowerShop.Infrastructure.Repositories.Interfaces;
+﻿using FlowerShop.Infrastructure;
 using FlowerShop.Infrastructure.Services;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Models;
+using FlowerShop.Web.Patch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -88,5 +89,29 @@ namespace FlowerShop.Web.Controllers
                 return BadRequest();
             }
         }
+
+        /// <summary>
+        /// Update address
+        /// </summary>
+        /// <returns></returns>
+        [HttpPatch("{productId}")]
+        public async Task<IActionResult> PatchProductDetails([FromRoute] int productId, [FromBody] ProductPatch productPatch)
+        {
+            try
+            {
+                //TODO auth user permissions
+
+                // var success = await _addressService.UpdateAddressAsync(addressId, addressModel.Street, addressModel.City, addressModel.PostalCode);
+                var success = await _productService.UpdateProductAsync(productId, productPatch.Name, productPatch.Price, productPatch.Description, productPatch.Quantity);
+
+                return success ? Ok() : NotFound();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occured in Product Controller, when updating product details");
+                return BadRequest();
+            }
+        }
+
     }
 }

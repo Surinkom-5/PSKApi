@@ -119,8 +119,6 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                //TODO auth user permissions
-
                 var success = await _productService.RemoveProductAsync(productId);
 
                 return success ? Ok() : NotFound();

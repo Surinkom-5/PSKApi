@@ -31,14 +31,17 @@ namespace FlowerShop.Core.Entities
             {
                 Name = name;
             }
+
             if(price != null)
             {
                 Price = (decimal)price;
             }
+
             if(description != null)
             {
                 Description = description;
             }
+
             if(quantity != null)
             {
                 AvailabilityCount = (int)quantity;

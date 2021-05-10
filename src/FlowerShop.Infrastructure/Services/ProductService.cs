@@ -57,6 +57,7 @@ namespace FlowerShop.Infrastructure.Services
             }
 
             _dbContext.Products.Remove(productToRemove);
+
             await _dbContext.SaveChangesAsync();
             return true;
         }

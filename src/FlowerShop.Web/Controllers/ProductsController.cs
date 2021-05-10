@@ -110,5 +110,27 @@ namespace FlowerShop.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete product
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> PathUserAddress([FromRoute] int productId)
+        {
+            try
+            {
+                //TODO auth user permissions
+
+                var success = await _productService.RemoveProductAsync(productId);
+
+                return success ? Ok() : NotFound();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occured in Product Controller, when deleting product");
+                return BadRequest();
+            }
+        }
+
     }
 }

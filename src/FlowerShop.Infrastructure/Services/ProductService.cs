@@ -9,6 +9,7 @@ namespace FlowerShop.Infrastructure.Services
     {
         public Task<int> CreateProductAsync(string name, decimal price, string description, ProductType productType);
         public Task<bool> UpdateProductAsync(int id, string name, decimal? price, string description, int? quantity);
+        public Task<bool> RemoveProductAsync(int productId);
     }
 
     public class ProductService : IProductService
@@ -45,5 +46,20 @@ namespace FlowerShop.Infrastructure.Services
             await _dbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> RemoveProductAsync(int productId)
+        {
+            var productToRemove = await _productRepository.GetProductByIdAsync(productId);
+
+            if (productToRemove == null)
+            {
+                return false;
+            }
+
+            _dbContext.Products.Remove(productToRemove);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

@@ -48,14 +48,17 @@ namespace FlowerShop.Infrastructure.Services
                     return null;
                 }
 
+                await _dbContext.SaveChangesAsync();
                 // TODO: subtract quantity of these items
 
                 var orderItems = CartItem.ToOrderItems(cartItems, createdOrder.Entity.OrderId);
                 await _dbContext.OrderItems.AddRangeAsync(orderItems);
                 _dbContext.CartItems.RemoveRange(cartItems);
+                cart.Price = 0;
+                _dbContext.Carts.Update(cart);
                 var result = await _dbContext.SaveChangesAsync();
 
-                if (result <= 0)
+                if (result < 0)
                 {
                     return null;
                 }
@@ -63,7 +66,7 @@ namespace FlowerShop.Infrastructure.Services
                 await transaction.CommitAsync();
                 return createdOrder.Entity;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 await transaction.RollbackAsync();
                 return null;

@@ -11,9 +11,9 @@ namespace FlowerShop.Core.Entities
         public string Comment { get; private set; }
         public string Email { get; private set; } // TODO: Add migration
         public OrderStatus OrderStatus { get; private set; }
-        public int AddressId { get; private set; }
+        public int? AddressId { get; private set; }
         public Address Address { get; private set; }
-        public int UserId { get; private set; }
+        public int? UserId { get; private set; }
         public User User { get; private set; }
 
         private readonly List<OrderItem> _orderItems = new();

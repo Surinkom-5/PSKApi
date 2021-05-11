@@ -11,8 +11,8 @@ namespace FlowerShop.Web.Models
         public decimal TotalPrice { get; set; }
         public string Comment { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public int AddressId { get; set; }
-        public int UserId { get; set; }
+        public int? AddressId { get; set; }
+        public int? UserId { get; set; }
 
         public static OrderViewModel ToModel(Order order)
         {

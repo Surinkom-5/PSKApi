@@ -70,6 +70,11 @@ namespace FlowerShop.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates an order from the provided cartId (via cartCookie header)
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderBody body)
         {

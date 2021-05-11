@@ -49,6 +49,7 @@ namespace FlowerShop.Web
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             //Configure swagger
             services.AddSwaggerGen(c =>

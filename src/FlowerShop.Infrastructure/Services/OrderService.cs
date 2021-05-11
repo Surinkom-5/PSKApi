@@ -33,11 +33,18 @@ namespace FlowerShop.Infrastructure.Services
                 var cart = await _shoppingCartRepository.GetCartByPublicIdAsync(cartId.ToString());
                 var cartItems = await _dbContext.CartItems.Where(c => c.CartId == cartId).ToListAsync();
 
-                if (cartItems == null || cartItems.Count < 0 || cart == null)
+                if (cartItems == null || cartItems.Count <= 0 || cart == null)
                 {
                     await transaction.RollbackAsync();
                     return null;
                 }
+
+                var idsToReduce = cartItems.Select(i => i.ProductId).ToList();
+                var productsToReduce = await _dbContext.Products.Where(i => idsToReduce.Contains(i.ProductId)).ToListAsync();
+
+                productsToReduce.ForEach(p => p.SetAvailabilityCount(p.AvailabilityCount - cartItems.First(i => i.ProductId == p.ProductId).Quantity));
+
+                _dbContext.Products.UpdateRange(productsToReduce);
 
                 var order = new Order(email, phoneNumber, comment, cart.Price);
                 var createdOrder = await _dbContext.Orders.AddAsync(order);
@@ -49,7 +56,6 @@ namespace FlowerShop.Infrastructure.Services
                 }
 
                 await _dbContext.SaveChangesAsync();
-                // TODO: subtract quantity of these items
 
                 var orderItems = CartItem.ToOrderItems(cartItems, createdOrder.Entity.OrderId);
                 await _dbContext.OrderItems.AddRangeAsync(orderItems);

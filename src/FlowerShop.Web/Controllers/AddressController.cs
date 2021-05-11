@@ -59,7 +59,8 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                await _addressService.AddNewAddressAsync(User.Identity.GetUserId(), addressModel.Street, addressModel.City, addressModel.PostalCode);
+                await _addressService.AddNewAddressAsync(User.Identity.GetUserId(), addressModel.Street,
+                    addressModel.City, addressModel.PostalCode);
 
                 return Ok();
             }
@@ -79,7 +80,8 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                var success = await _addressService.UpdateAddressAsync(User.Identity.GetUserId(), addressId, addressModel.Street, addressModel.City, addressModel.PostalCode);
+                var success = await _addressService.UpdateAddressAsync(User.Identity.GetUserId(), addressId,
+                    addressModel.Street, addressModel.City, addressModel.PostalCode);
 
                 return success ? Ok() : NotFound();
             }

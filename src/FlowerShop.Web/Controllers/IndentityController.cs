@@ -25,56 +25,23 @@ namespace FlowerShop.Web.Controllers
         [Route("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationModel userRegistrationModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new AuthResultViewModel()
-                {
-                    Errors = new List<string>() { "Invalid model" }
-                });
-            }
-
             var response = await _identityService.RegisterAsync(userRegistrationModel.Email,
                 userRegistrationModel.Name, userRegistrationModel.Password);
 
-            if (string.IsNullOrEmpty(response.Token))
-            {
-                return BadRequest(new AuthResultViewModel()
-                {
-                    Errors = response.Errors
-                });
-            }
-
-            return Ok(new AuthResultViewModel()
-            {
-                Token = response.Token
-            });
+            return string.IsNullOrEmpty(response.Token)
+                ? BadRequest(new AuthResultViewModel() { Errors = response.Errors })
+                : Ok(new AuthResultViewModel() { Token = response.Token });
         }
 
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginModel userLoginModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new AuthResultViewModel()
-                {
-                    Errors = new List<string>() { "Invalid model" }
-                });
-            }
             var (token, error) = await _identityService.LoginAsync(userLoginModel.Email, userLoginModel.Password);
 
-            if (string.IsNullOrEmpty(token))
-            {
-                return BadRequest(new AuthResultViewModel()
-                {
-                    Errors = new List<string>() { error }
-                });
-            }
-
-            return Ok(new AuthResultViewModel()
-            {
-                Token = token
-            });
+            return string.IsNullOrEmpty(token)
+                ? BadRequest(new AuthResultViewModel() { Errors = new List<string>() { error } })
+                : Ok(new AuthResultViewModel() { Token = token });
         }
     }
 }

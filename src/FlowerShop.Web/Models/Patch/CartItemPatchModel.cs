@@ -1,6 +1,6 @@
-﻿namespace FlowerShop.Web.Patch
+﻿namespace FlowerShop.Web.Models
 {
-    public class CartItemPatch
+    public class CartItemPatchModel
     {
         public int ProductId { get; set; }
         public int Quantity { get; set; }

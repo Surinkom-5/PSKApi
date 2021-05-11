@@ -33,8 +33,7 @@ namespace FlowerShop.Web
                     }
                     catch (Exception ex)
                     {
-                        var loggerService = services.GetRequiredService<ILogger<Program>>();
-                        loggerService.LogError(ex, "An error occurred seeding the DB.");
+                        logger.Error(ex, "An error occurred seeding the DB.");
                     }
                 }
 

@@ -20,7 +20,7 @@ namespace FlowerShop.Infrastructure.Data.Config
                .IsRequired();
 
             builder.Property(x => x.OrderStatus)
-               .HasDefaultValue(OrderStatus.InProgress)
+               .HasDefaultValue(OrderStatus.Confirmed)
                .IsRequired();
 
             builder.HasMany(x => x.OrderItems)

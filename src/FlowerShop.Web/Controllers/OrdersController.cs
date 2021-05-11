@@ -94,7 +94,15 @@ namespace FlowerShop.Web.Controllers
                     return BadRequest();
                 }
 
-                var result = await _orderService.CreateOrder(body.Email, body.PhoneNumber, body.Comment, Guid.Parse(cartCookie));
+                var result = await _orderService.CreateOrder(body.Email, 
+                    body.PhoneNumber, 
+                    body.Comment, 
+                    Guid.Parse(cartCookie), 
+                    body.FirstName, 
+                    body.LastName, 
+                    body.Address, 
+                    body.City, 
+                    body.PostCode);
 
                 return result is null ? StatusCode(500) : Ok(OrderViewModel.ToModel(result));
             }
@@ -104,5 +112,7 @@ namespace FlowerShop.Web.Controllers
                 return BadRequest();
             }
         }
+
+        // TODO: PATCH for Order status
     }
 }

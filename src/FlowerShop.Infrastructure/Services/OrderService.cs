@@ -24,7 +24,15 @@ namespace FlowerShop.Infrastructure.Services
             _shoppingCartRepository = shoppingCartRepository;
         }
 
-        public async Task<Order> CreateOrder(string email, string phoneNumber, string comment, Guid cartId)
+        public async Task<Order> CreateOrder(string email, 
+            string phoneNumber, 
+            string comment, 
+            Guid cartId, 
+            string firstName, 
+            string lastName, 
+            string address, 
+            string city, 
+            string postCode)
         {
             var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -46,7 +54,7 @@ namespace FlowerShop.Infrastructure.Services
 
                 _dbContext.Products.UpdateRange(productsToReduce);
 
-                var order = new Order(email, phoneNumber, comment, cart.Price);
+                var order = new Order(email, phoneNumber, comment, cart.Price, firstName, lastName, address, city, postCode);
                 var createdOrder = await _dbContext.Orders.AddAsync(order);
 
                 if (createdOrder == null)

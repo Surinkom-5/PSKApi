@@ -4,20 +4,27 @@ using FlowerShop.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using FlowerShop.Infrastructure.Services.Interfaces;
+using FlowerShop.Web.Post;
+using Microsoft.Extensions.Primitives;
 
 namespace FlowerShop.Web.Controllers
 {
     public class OrdersController : BaseApiController
     {
-        private readonly IOrderRepository _orderReprository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IOrderService _orderService;
         private readonly ILogger<OrdersController> _logger;
 
         public OrdersController(IOrderRepository orderRepository,
-            ILogger<OrdersController> logger)
+            ILogger<OrdersController> logger,
+            IOrderService orderService)
         {
-            _orderReprository = orderRepository;
+            _orderRepository = orderRepository;
             _logger = logger;
+            _orderService = orderService;
         }
 
         /// <summary>
@@ -30,7 +37,7 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                var order = await _orderReprository.GetOrderByIdAsync(orderId);
+                var order = await _orderRepository.GetOrderByIdAsync(orderId);
 
                 return order is null ? NotFound() : Ok(OrderViewModel.ToModel(order));
             }
@@ -51,7 +58,7 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                var order = await _orderReprository.GetOrdersByUserIdAsync(userId);
+                var order = await _orderRepository.GetOrdersByUserIdAsync(userId);
 
                 return order is null ? NotFound() : Ok(OrderViewModel.ToModel(order));
 
@@ -59,6 +66,36 @@ namespace FlowerShop.Web.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "Exception Occured in Order Controller, get orders by user id");
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderBody body)
+        {
+            try
+            {
+                // If user has "cartCookie" header value
+                if (!Request.Headers.TryGetValue(Constants.CartCookie, out StringValues headerValues))
+                {
+                    // Means user does not have a cart yet
+                    return StatusCode(500);
+                }
+
+                var cartCookie = headerValues.FirstOrDefault();
+
+                if (cartCookie == null)
+                {
+                    return BadRequest();
+                }
+
+                var result = await _orderService.CreateOrder(body.Email, body.PhoneNumber, body.Comment, Guid.Parse(cartCookie));
+
+                return result is null ? StatusCode(500) : Ok(OrderViewModel.ToModel(result));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occurred in Order Controller, create order");
                 return BadRequest();
             }
         }

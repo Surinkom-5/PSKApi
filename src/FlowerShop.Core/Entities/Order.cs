@@ -9,6 +9,7 @@ namespace FlowerShop.Core.Entities
         public string PhoneNumber { get; private set; }
         public decimal TotalPrice { get; private set; }
         public string Comment { get; private set; }
+        public string Email { get; private set; } // TODO: Add migration
         public OrderStatus OrderStatus { get; private set; }
         public int AddressId { get; private set; }
         public Address Address { get; private set; }
@@ -21,6 +22,15 @@ namespace FlowerShop.Core.Entities
 
         private Order()
         {
+        }
+
+        public Order(string email, string phoneNumber, string comment, decimal totalPrice)
+        {
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Comment = comment;
+            TotalPrice = totalPrice;
+            OrderStatus = OrderStatus.InProgress;
         }
     }
 }

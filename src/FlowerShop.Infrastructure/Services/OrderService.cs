@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlowerShop.Core.Entities;
+using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
@@ -87,9 +88,27 @@ namespace FlowerShop.Infrastructure.Services
             }
         }
 
-        public Task<Order> ChangeOrderStatus(int cartId)
+        public async Task<bool> ChangeOrderStatus(int orderId, string orderStatus)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var order = await _orderRepository.GetOrderByIdAsync(orderId);
+
+                if (order == null)
+                {
+                    return false;
+                }
+
+                order.ChangeStatus(Enum.Parse<OrderStatus>(orderStatus));
+                _dbContext.Orders.Update(order);
+                var result = await _dbContext.SaveChangesAsync();
+
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -53,5 +53,10 @@ namespace FlowerShop.Core.Entities
             City = city;
             PostCode = postCode;
         }
+
+        public void ChangeStatus(OrderStatus status)
+        {
+            OrderStatus = status;
+        }
     }
 }

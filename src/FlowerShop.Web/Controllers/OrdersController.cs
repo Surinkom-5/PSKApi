@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FlowerShop.Infrastructure.Services.Interfaces;
+using FlowerShop.Web.Patch;
 using FlowerShop.Web.Post;
 using Microsoft.Extensions.Primitives;
 
@@ -113,6 +114,26 @@ namespace FlowerShop.Web.Controllers
             }
         }
 
-        // TODO: PATCH for Order status
+        /// <summary>
+        /// Updates Order status
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="orderStatusPatch">Body, containing new order Status</param>
+        /// <returns></returns>
+        [HttpPatch("{orderId}")]
+        public async Task<IActionResult> UpdateStatus([FromRoute] int orderId, [FromBody] OrderStatusPatch orderStatusPatch)
+        {
+            try
+            {
+                var result = await _orderService.ChangeOrderStatus(orderId, orderStatusPatch.OrderStatus);
+
+                return result ? Ok() : StatusCode(500);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occurred in Order Controller, create order");
+                return BadRequest();
+            }
+        }
     }
 }

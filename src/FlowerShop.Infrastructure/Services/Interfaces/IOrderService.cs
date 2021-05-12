@@ -11,6 +11,6 @@ namespace FlowerShop.Infrastructure.Services.Interfaces
     {
         public Task<Order> CreateOrder(string email, string phoneNumber, string comment, Guid cartId, string firstName, string lastName, string address, string city, string postCode);
 
-        public Task<Order> ChangeOrderStatus(int cartId);
+        public Task<bool> ChangeOrderStatus(int orderId, string orderStatus);
     }
 }

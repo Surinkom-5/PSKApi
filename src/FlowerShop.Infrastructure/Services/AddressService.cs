@@ -7,8 +7,10 @@ namespace FlowerShop.Infrastructure.Services
     public interface IAddressService
     {
         public Task<int> AddNewAddressAsync(int userId, string street, string city, string postalCode);
-        public Task<bool> RemoveAddressAsync(int addressId);
-        public Task<bool> UpdateAddressAsync(int addressId, string street, string city, string postalCode);
+
+        public Task<bool> RemoveAddressAsync(int userId, int addressId);
+
+        public Task<bool> UpdateAddressAsync(int userId, int addressId, string street, string city, string postalCode);
     }
 
     public class AddressService : IAddressService
@@ -16,7 +18,8 @@ namespace FlowerShop.Infrastructure.Services
         private readonly AppDbContext _dbContext;
         private readonly IAddressRepository _addressRepository;
 
-        public AddressService(AppDbContext context, IAddressRepository addressRepository)
+        public AddressService(AppDbContext context,
+            IAddressRepository addressRepository)
         {
             _dbContext = context;
             _addressRepository = addressRepository;
@@ -31,9 +34,9 @@ namespace FlowerShop.Infrastructure.Services
             return newAddress.AddressId;
         }
 
-        public async Task<bool> RemoveAddressAsync(int addressId)
+        public async Task<bool> RemoveAddressAsync(int userId, int addressId)
         {
-            var addressToRemove = await _addressRepository.GetAddressByIdAsync(addressId);
+            var addressToRemove = await _addressRepository.GetUserAddressByIdAsync(userId, addressId);
 
             if (addressToRemove == null)
             {
@@ -45,9 +48,9 @@ namespace FlowerShop.Infrastructure.Services
             return true;
         }
 
-        public async Task<bool> UpdateAddressAsync(int addressId, string street, string city, string postalCode)
+        public async Task<bool> UpdateAddressAsync(int userId, int addressId, string street, string city, string postalCode)
         {
-            var addressToUpdate = await _addressRepository.GetAddressByIdAsync(addressId);
+            var addressToUpdate = await _addressRepository.GetUserAddressByIdAsync(userId, addressId);
 
             if (addressToUpdate == null)
             {

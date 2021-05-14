@@ -1,0 +1,113 @@
+﻿using FlowerShop.Core.Constants;
+using FlowerShop.Infrastructure.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlowerShop.Infrastructure.Services
+{
+    public interface IIdentityService
+    {
+        public Task<RegistrationResponseModel> RegisterAsync(string email, string name, string password);
+
+        public Task<(string token, string error)> LoginAsync(string email, string password);
+    }
+
+    public class IdentityService : IIdentityService
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly JwtConfig _jwtConfig;
+
+        public IdentityService(UserManager<IdentityUser> userManager,
+            IOptionsMonitor<JwtConfig> optionsMonitor,
+            IUserService userService,
+            IUserRepository userRepository)
+        {
+            _userManager = userManager;
+            _jwtConfig = optionsMonitor.CurrentValue;
+            _userService = userService;
+            _userRepository = userRepository;
+        }
+
+        public async Task<RegistrationResponseModel> RegisterAsync(string email, string name, string password)
+        {
+            var existingUser = await _userManager.FindByEmailAsync(email);
+
+            if (existingUser != null)
+            {
+                return new RegistrationResponseModel() { Errors = new List<string>() { "User already exists" } };
+            }
+
+            var newUser = new IdentityUser() { Email = email, UserName = email };
+            var isCreated = await _userManager.CreateAsync(newUser, password);
+            if (isCreated.Succeeded)
+            {
+                var userId = await _userService.AddUserAsync(name, email);
+
+                var jwtToken = GenerateJwtToken(newUser, userId.ToString());
+
+                return new RegistrationResponseModel() { Token = jwtToken };
+            }
+
+            return new RegistrationResponseModel() { Errors = isCreated.Errors.Select(x => x.Description).ToList() };
+        }
+
+        public async Task<(string token, string error)> LoginAsync(string email, string password)
+        {
+            var existingUser = await _userManager.FindByEmailAsync(email);
+
+            if (existingUser == null)
+            {
+                return (string.Empty, "User not found");
+            }
+
+            var isCorrect = await _userManager.CheckPasswordAsync(existingUser, password);
+
+            if (isCorrect)
+            {
+                var user = await _userRepository.GetUserByEmailAsync(email);
+                var jwtToken = GenerateJwtToken(existingUser, user.UserId.ToString());
+
+                return (jwtToken, string.Empty);
+            }
+            else
+            {
+                return (string.Empty, "Invalid authentication error");
+            }
+        }
+
+        private string GenerateJwtToken(IdentityUser user, string userId)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+
+            var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                new Claim(ClaimsConstants.Id, user.Id),
+                new Claim(ClaimsConstants.UserId, userId),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            }),
+                Expires = DateTime.UtcNow.AddHours(6),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+            };
+
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+
+            var jwtToken = jwtTokenHandler.WriteToken(token);
+
+            return jwtToken;
+        }
+    }
+}

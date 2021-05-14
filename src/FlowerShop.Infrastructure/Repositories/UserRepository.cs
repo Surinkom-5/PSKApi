@@ -1,6 +1,6 @@
-﻿using FlowerShop.Infrastructure.Data;
+﻿using FlowerShop.Core.Entities;
+using FlowerShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure
@@ -14,9 +14,9 @@ namespace FlowerShop.Infrastructure
             _dbContext = context;
         }
 
-        public async Task<int> GetFirstUserIdAsync()
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _dbContext.Users.Select(x => x.UserId).FirstOrDefaultAsync();
+            return await _dbContext.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == email);
         }
     }
 }

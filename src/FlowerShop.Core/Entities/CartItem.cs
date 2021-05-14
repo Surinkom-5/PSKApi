@@ -20,6 +20,5 @@ namespace FlowerShop.Core.Entities
             ProductId = productId;
             Quantity = quantity;
         }
-
     }
 }

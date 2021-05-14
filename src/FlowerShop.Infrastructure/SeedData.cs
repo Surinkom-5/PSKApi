@@ -1,6 +1,7 @@
 ﻿using FlowerShop.Core.Entities;
 using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,7 +12,6 @@ namespace FlowerShop.Infrastructure
 {
     public static class SeedData
     {
-
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using var dbContext = new AppDbContext(
@@ -28,6 +28,7 @@ namespace FlowerShop.Infrastructure
             }
 
             SeedProducts(dbContext);
+            SeedRoles(dbContext);
             SeedUsers(dbContext);
             SeedAddresses(dbContext);
             CreateFullTextCatalog(dbContext);
@@ -65,21 +66,47 @@ namespace FlowerShop.Infrastructure
 
         private static void SeedUsers(AppDbContext dbContext)
         {
-            if (dbContext.Users.Any())
+            if (dbContext.ApplicationUsers.Any())
             {
                 return;   // DB has been seeded
             }
 
-            var users = new List<User>
-            {
-                new User("Kazys Kazlauskas", "KzK@mail.com"),
-                new User("Jonas Jonauskas", "jonas@mail.com")
-            };
-            var adminUser = new User("Admin admin", "admin@mail.com");
-            adminUser.SetUserRole(UserRole.Owner);
+            var ownerRoleId = dbContext.Roles.FirstOrDefault(a => a.Name.Equals("Owner")).Id;
 
-            dbContext.Users.AddRange(users);
-            dbContext.Users.Add(adminUser);
+            var userIdentity = new IdentityUser("user@mail.com") { Email = "user@mail.com", NormalizedEmail = "USER@MAIL.COM" };
+            var ownerIdentity = new IdentityUser("owner@mail.com") { Email = "owner@mail.com", NormalizedEmail = "OWNER@MAIL.COM" };
+
+            var ph = new PasswordHasher<IdentityUser>();
+            ownerIdentity.PasswordHash = ph.HashPassword(ownerIdentity, "admin");
+            userIdentity.PasswordHash = ph.HashPassword(ownerIdentity, "user");
+            dbContext.Users.Add(userIdentity);
+            dbContext.Users.Add(ownerIdentity);
+            dbContext.SaveChanges();
+
+            dbContext.UserRoles.Add(new IdentityUserRole<string>() { UserId = ownerIdentity.Id, RoleId = ownerRoleId.ToString() });
+            var user = new User("user", "user@mail.com");
+            var ownerAppUser = new User("Admin admin", "owner@mail.com");
+
+            ownerAppUser.SetUserRole(UserRole.Owner);
+
+            dbContext.ApplicationUsers.Add(user);
+            dbContext.ApplicationUsers.Add(ownerAppUser);
+
+            dbContext.SaveChanges();
+        }
+
+        private static void SeedRoles(AppDbContext dbContext)
+        {
+            if (dbContext.Roles.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            dbContext.Roles.Add(new IdentityRole
+            {
+                Name = "Owner",
+                NormalizedName = "OWNER"
+            });
 
             dbContext.SaveChanges();
         }
@@ -91,7 +118,7 @@ namespace FlowerShop.Infrastructure
                 return;   // DB has been seeded
             }
 
-            var users = dbContext.Users.ToList();
+            var users = dbContext.ApplicationUsers.ToList();
             var addresses = new List<Address>();
             users.ForEach(u => addresses.Add(new Address(u.UserId, "testStreet", "testCity", "testCode")));
 

@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using FlowerShop.Core.Entities;
+using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure
 {
     public interface IUserRepository
     {
-        public Task<int> GetFirstUserIdAsync();
+        public Task<User> GetUserByEmailAsync(string email);
     }
 }

@@ -11,6 +11,5 @@
         private OrderItem()
         {
         }
-
     }
 }

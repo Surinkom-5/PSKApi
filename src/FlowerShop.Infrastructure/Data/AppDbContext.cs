@@ -1,14 +1,15 @@
 ﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data.Config;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlowerShop.Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> ApplicationUsers { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
@@ -18,17 +19,17 @@ namespace FlowerShop.Infrastructure.Data
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            new AddressEntityConfiguration().Configure(modelBuilder.Entity<Address>());
-            new CartEntityConfiguration().Configure(modelBuilder.Entity<Cart>());
-            new CartItemEntityConfiguration().Configure(modelBuilder.Entity<CartItem>());
-            new OrderEntityConfiguration().Configure(modelBuilder.Entity<Order>());
-            new OrderItemEntityConfiguration().Configure(modelBuilder.Entity<OrderItem>());
-            new ProductEntityConfiguration().Configure(modelBuilder.Entity<Product>());
-            new UserEntityConfiguration().Configure(modelBuilder.Entity<User>());
+            new AddressEntityConfiguration().Configure(builder.Entity<Address>());
+            new CartEntityConfiguration().Configure(builder.Entity<Cart>());
+            new CartItemEntityConfiguration().Configure(builder.Entity<CartItem>());
+            new OrderEntityConfiguration().Configure(builder.Entity<Order>());
+            new OrderItemEntityConfiguration().Configure(builder.Entity<OrderItem>());
+            new ProductEntityConfiguration().Configure(builder.Entity<Product>());
+            new UserEntityConfiguration().Configure(builder.Entity<User>());
         }
     }
 }

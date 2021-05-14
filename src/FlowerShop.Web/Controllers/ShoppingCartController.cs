@@ -1,8 +1,8 @@
-﻿using FlowerShop.Infrastructure.Repositories.Interfaces;
+﻿using FlowerShop.Core.Constants;
+using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Models;
-using FlowerShop.Web.Patch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -14,12 +14,11 @@ namespace FlowerShop.Web.Controllers
 {
     public class ShoppingCartController : BaseApiController
     {
-        private readonly ILogger<ProductsController> _logger;
+        private readonly ILogger<ShoppingCartController> _logger;
         private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly IShoppingCartService _shoppingCartService;
 
-
-        public ShoppingCartController(ILogger<ProductsController> logger,
+        public ShoppingCartController(ILogger<ShoppingCartController> logger,
             IShoppingCartRepository shoppingCartRepository,
             IShoppingCartService shoppingCartService)
         {
@@ -38,7 +37,7 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 // If user has "cartCookie" header value
-                if (Request.Headers.TryGetValue(Constants.CartCookie, out StringValues headerValues))
+                if (Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
                 {
                     var cartCookie = headerValues.FirstOrDefault();
                     var cart = await _shoppingCartRepository.GetCartByPublicIdAsync(cartCookie);
@@ -52,10 +51,9 @@ namespace FlowerShop.Web.Controllers
 
                     if (cart is null) return StatusCode(500);
 
-                    Response.Headers.Add(Constants.CartCookie, cart.Id.ToString());
+                    Response.Headers.Add(CookieConstants.CartCookie, cart.Id.ToString());
                     return Ok(CartViewModel.ToModel(cart));
                 }
-
             }
             catch (Exception ex)
             {
@@ -68,23 +66,22 @@ namespace FlowerShop.Web.Controllers
         /// Adds specified item to active cart
         /// Request must contain cartCookie
         /// </summary>
-        /// <param name="body"></param>
+        /// <param name="cartItemPatchModel"></param>
         /// <returns></returns>
         [HttpPatch]
-        public async Task<IActionResult> AddItemToCart([FromBody] CartItemPatch body)
+        public async Task<IActionResult> AddItemToCart([FromBody] CartItemPatchModel cartItemPatchModel)
         {
             try
             {
                 // If user has "cartCookie" header value
-                if (!Request.Headers.TryGetValue("cartCookie", out StringValues headerValues)) return BadRequest();
-                if (body == null) return BadRequest();
-
+                if (!Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues)) return BadRequest();
+                if (cartItemPatchModel == null) return BadRequest();
 
                 var cartCookie = headerValues.FirstOrDefault();
-                var result = await _shoppingCartService.AddItemToCart(cartCookie, body.productId, body.quantity);
+                var result = await _shoppingCartService.AddItemToCart(cartCookie, cartItemPatchModel.ProductId,
+                    cartItemPatchModel.Quantity);
 
                 return result is false ? NotFound() : Ok();
-
             }
             catch (Exception ex)
             {
@@ -105,13 +102,12 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 // If user has "cartCookie" header value
-                if (!Request.Headers.TryGetValue("cartCookie", out StringValues headerValues)) return BadRequest();
+                if (!Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues)) return BadRequest();
 
                 var cartCookie = headerValues.FirstOrDefault();
                 var result = await _shoppingCartService.RemoveItemFromCart(cartCookie, itemId);
 
                 return result is false ? NotFound() : Ok();
-
             }
             catch (Exception ex)
             {

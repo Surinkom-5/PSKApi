@@ -1,7 +1,10 @@
 ﻿using FlowerShop.Infrastructure;
 using FlowerShop.Infrastructure.Services;
 using FlowerShop.Web.Api;
+using FlowerShop.Web.Extensions;
 using FlowerShop.Web.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,22 +12,20 @@ using System.Threading.Tasks;
 
 namespace FlowerShop.Web.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AddressController : BaseApiController
     {
         private readonly IAddressRepository _addressRepository;
         private readonly IAddressService _addressService;
-        private readonly IUserRepository _userRepository;
         private readonly ILogger<OrdersController> _logger;
 
         public AddressController(
             ILogger<OrdersController> logger,
             IAddressRepository addressRepository,
-            IUserRepository userRepository,
             IAddressService addressService)
         {
             _logger = logger;
             _addressRepository = addressRepository;
-            _userRepository = userRepository;
             _addressService = addressService;
         }
 
@@ -37,10 +38,7 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                //TODO When adding user auth pass userId
-                var userId = await _userRepository.GetFirstUserIdAsync();
-
-                var addresses = await _addressRepository.GetUserAddressesAsync(userId);
+                var addresses = await _addressRepository.GetUserAddressesAsync(User.Identity.GetUserId());
 
                 return Ok(AddressViewModel.ToModel(addresses));
             }
@@ -61,10 +59,8 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                //TODO When adding user auth pass userId
-                var userId = await _userRepository.GetFirstUserIdAsync();
-
-                await _addressService.AddNewAddressAsync(userId, addressModel.Street, addressModel.City, addressModel.PostalCode);
+                await _addressService.AddNewAddressAsync(User.Identity.GetUserId(), addressModel.Street,
+                    addressModel.City, addressModel.PostalCode);
 
                 return Ok();
             }
@@ -84,9 +80,8 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                //TODO auth user permissions
-
-                var success = await _addressService.UpdateAddressAsync(addressId, addressModel.Street, addressModel.City, addressModel.PostalCode);
+                var success = await _addressService.UpdateAddressAsync(User.Identity.GetUserId(), addressId,
+                    addressModel.Street, addressModel.City, addressModel.PostalCode);
 
                 return success ? Ok() : NotFound();
             }
@@ -106,9 +101,7 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                //TODO auth user permissions
-
-                var success = await _addressService.RemoveAddressAsync(addressId);
+                var success = await _addressService.RemoveAddressAsync(User.Identity.GetUserId(), addressId);
 
                 return success ? Ok() : NotFound();
             }

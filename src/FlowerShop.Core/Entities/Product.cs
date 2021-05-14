@@ -26,14 +26,7 @@ namespace FlowerShop.Core.Entities
             ProductType = productType;
         }
 
-        public Product(string name, decimal price, string description, ProductType productType, string imageUrl)
-        {
-            Name = name;
-            Price = price;
-            Description = description;
-            ProductType = productType;
-            ImageUrl = imageUrl;
-        }
+        public void SetImageUrl(string imageUrl) => ImageUrl = imageUrl;
 
         public void SetAvailabilityCount(int newCount) => AvailabilityCount = newCount;
     }

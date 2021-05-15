@@ -1,4 +1,5 @@
-﻿using FlowerShop.Core.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using FlowerShop.Core.Enums;
 
 namespace FlowerShop.Core.Entities
 {
@@ -10,6 +11,7 @@ namespace FlowerShop.Core.Entities
         public string Description { get; private set; }
         public int AvailabilityCount { get; private set; }
         public ProductType ProductType { get; private set; }
+        public string ImageUrl { get; private set; }
 
         private Product()
         {
@@ -22,6 +24,8 @@ namespace FlowerShop.Core.Entities
             Description = description;
             ProductType = productType;
         }
+
+        public void SetImageUrl(string imageUrl) => ImageUrl = imageUrl;
 
         public void SetAvailabilityCount(int newCount) => AvailabilityCount = newCount;
 

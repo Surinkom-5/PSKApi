@@ -24,5 +24,28 @@ namespace FlowerShop.Core.Entities
         }
 
         public void SetAvailabilityCount(int newCount) => AvailabilityCount = newCount;
+
+        public void UpdateProductDetails(string name, decimal? price, string description, int? quantity)
+        {
+            if(name != null)
+            {
+                Name = name;
+            }
+
+            if(price.HasValue)
+            {
+                Price = (decimal)price;
+            }
+
+            if(description != null)
+            {
+                Description = description;
+            }
+
+            if(quantity.HasValue)
+            {
+                AvailabilityCount = (int)quantity;
+            }
+        }
     }
 }

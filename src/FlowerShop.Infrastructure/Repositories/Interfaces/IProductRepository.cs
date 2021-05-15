@@ -3,7 +3,7 @@ using FlowerShop.Core.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FlowerShop.Infrastructure.Repositories.Interfaces
+namespace FlowerShop.Infrastructure
 {
     public interface IProductRepository
     {

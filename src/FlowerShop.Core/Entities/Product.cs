@@ -32,7 +32,7 @@ namespace FlowerShop.Core.Entities
                 Name = name;
             }
 
-            if(price != null)
+            if(price.HasValue)
             {
                 Price = (decimal)price;
             }
@@ -42,7 +42,7 @@ namespace FlowerShop.Core.Entities
                 Description = description;
             }
 
-            if(quantity != null)
+            if(quantity.HasValue)
             {
                 AvailabilityCount = (int)quantity;
             }

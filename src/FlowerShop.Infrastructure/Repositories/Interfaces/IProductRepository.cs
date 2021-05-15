@@ -10,5 +10,7 @@ namespace FlowerShop.Infrastructure.Repositories.Interfaces
         public Task<Product> GetProductByIdAsync(int productId);
 
         public Task<List<Product>> GetProductsByFiltersAsync(string searchText, ProductType? productType);
+
+        public Task<List<ProductType>> GetAvailableProductTypesAsync();
     }
 }

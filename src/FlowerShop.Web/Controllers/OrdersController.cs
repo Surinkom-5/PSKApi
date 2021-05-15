@@ -77,7 +77,7 @@ namespace FlowerShop.Web.Controllers
         /// <param name="body"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderBody body)
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderModel body)
         {
             try
             {
@@ -95,15 +95,18 @@ namespace FlowerShop.Web.Controllers
                     return BadRequest();
                 }
 
-                var result = await _orderService.CreateOrder(body.Email, 
-                    body.PhoneNumber, 
-                    body.Comment, 
-                    Guid.Parse(cartCookie), 
-                    body.FirstName, 
-                    body.LastName, 
-                    body.Address, 
-                    body.City, 
-                    body.PostCode);
+                var result = await _orderService.CreateOrder(new Infrastructure.CustomModels.CreateOrderModel()
+                {
+                    Email = body.Email,
+                    Comment = body.Comment,
+                    CartId = Guid.Parse(cartCookie),
+                    FirstName = body.FirstName,
+                    LastName = body.LastName,
+                    Address = body.Address,
+                    City = body.City,
+                    PostCode = body.PostCode,
+                    PhoneNumber = body.PhoneNumber
+                });
 
                 return result is null ? StatusCode(500) : Ok(OrderViewModel.ToModel(result));
             }

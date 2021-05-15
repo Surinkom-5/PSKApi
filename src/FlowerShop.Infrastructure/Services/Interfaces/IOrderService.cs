@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FlowerShop.Core.Entities;
+using FlowerShop.Infrastructure.CustomModels;
 
 namespace FlowerShop.Infrastructure.Services.Interfaces
 {
     public interface IOrderService
     {
-        public Task<Order> CreateOrder(string email, string phoneNumber, string comment, Guid cartId, string firstName, string lastName, string address, string city, string postCode);
+        public Task<Order> CreateOrder(CreateOrderModel orderModel);
 
         public Task<bool> ChangeOrderStatus(int orderId, string orderStatus);
     }

@@ -5,6 +5,7 @@ using FlowerShop.Infrastructure.Services.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace FlowerShop.Infrastructure.Services
 {
@@ -12,11 +13,13 @@ namespace FlowerShop.Infrastructure.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly IProductRepository _productRepository;
+        private readonly ILogger<ShoppingCartService> _logger;
 
-        public ShoppingCartService(AppDbContext dbContext, IProductRepository productRepository)
+        public ShoppingCartService(AppDbContext dbContext, IProductRepository productRepository, ILogger<ShoppingCartService> logger)
         {
             _dbContext = dbContext;
             _productRepository = productRepository;
+            _logger = logger;
         }
         public async Task<Cart> CreateCart()
         {
@@ -28,7 +31,7 @@ namespace FlowerShop.Infrastructure.Services
 
         public async Task<bool> AddItemToCart(string cartId, int itemId, int quantity)
         {
-            var transaction = await _dbContext.Database.BeginTransactionAsync();
+            await using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 var cart = await _dbContext.Carts.FindAsync(Guid.Parse(cartId));
@@ -36,15 +39,22 @@ namespace FlowerShop.Infrastructure.Services
                 var result = await _dbContext.CartItems.AddAsync(cartItem);
 
                 var product = await _productRepository.GetProductByIdAsync(itemId);
-                cart.Price += product.Price;
+
+                if (product == null)
+                {
+                    return false;
+                }
+
+                cart.SetPrice(product.Price + cart.Price);
                 _dbContext.Carts.Update(cart);
                 await _dbContext.SaveChangesAsync();
 
                 await transaction.CommitAsync();
                 return result != null;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                _logger.LogError(e, "Exception occurred in ShoppingCartService: AddItemToCart");
                 await transaction.RollbackAsync();
                 return false;
             }
@@ -52,7 +62,7 @@ namespace FlowerShop.Infrastructure.Services
 
         public async Task<bool> RemoveItemFromCart(string cartId, int itemId)
         {
-            var transaction = await _dbContext.Database.BeginTransactionAsync();
+            await using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
                 var cart = await _dbContext.Carts.FindAsync(Guid.Parse(cartId));
@@ -65,15 +75,16 @@ namespace FlowerShop.Infrastructure.Services
 
                 var result = _dbContext.CartItems.Remove(itemToDelete);
                 var product = await _productRepository.GetProductByIdAsync(itemId);
-                cart.Price -= product.Price;
+                cart.SetPrice(cart.Price - product.Price);
                 _dbContext.Carts.Update(cart);
                 await _dbContext.SaveChangesAsync();
 
                 await transaction.CommitAsync();
                 return result != null;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                _logger.LogError(e, "Exception occurred in ShoppingCartService: RemoveItemFromCart");
                 await transaction.RollbackAsync();
                 return false;
             }

@@ -6,7 +6,7 @@ namespace FlowerShop.Core.Entities
     public class Cart
     {
         public Guid Id { get; private set; }
-        public decimal Price { get; set; }
+        public decimal Price { get; private set; }
         public int? UserId { get; private set; }
         public User User { get; private set; }
         private readonly List<CartItem> _cartItems = new();
@@ -21,5 +21,7 @@ namespace FlowerShop.Core.Entities
             Price = price;
             Id = Guid.NewGuid();
         }
+
+        public void SetPrice(decimal price) => Price = price;
     }
 }

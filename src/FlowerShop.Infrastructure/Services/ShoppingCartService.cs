@@ -1,7 +1,7 @@
-﻿using System;
-using FlowerShop.Core.Entities;
+﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Services.Interfaces;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
@@ -21,6 +21,7 @@ namespace FlowerShop.Infrastructure.Services
             _productRepository = productRepository;
             _logger = logger;
         }
+
         public async Task<Cart> CreateCart()
         {
             var cart = new Cart(0);

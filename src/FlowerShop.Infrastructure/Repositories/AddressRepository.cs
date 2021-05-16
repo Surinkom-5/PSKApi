@@ -25,5 +25,11 @@ namespace FlowerShop.Infrastructure
         {
             return await _dbContext.Addresses.FirstOrDefaultAsync(a => a.AddressId == addressId);
         }
+
+        public async Task<Address> GetUserAddressByIdAsync(int userId, int addressId)
+        {
+            return await _dbContext.Addresses
+                .FirstOrDefaultAsync(a => a.AddressId == addressId && a.UserId == userId);
+        }
     }
 }

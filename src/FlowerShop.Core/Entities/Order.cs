@@ -27,7 +27,6 @@ namespace FlowerShop.Core.Entities
         private readonly List<OrderItem> _orderItems = new();
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
-
         private Order()
         {
         }

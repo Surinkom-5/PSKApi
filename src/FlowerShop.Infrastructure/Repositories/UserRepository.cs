@@ -18,5 +18,15 @@ namespace FlowerShop.Infrastructure
         {
             return await _dbContext.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == email);
         }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _dbContext.ApplicationUsers.FirstOrDefaultAsync(x => x.UserId == id);
+        }
+
+        public async Task<bool> CheckIfUserExists(string email)
+        {
+            return await _dbContext.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == email) != null;
+        }
     }
 }

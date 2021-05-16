@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FlowerShop.Core.Constants;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Patch;
 using FlowerShop.Web.Post;
@@ -81,7 +82,7 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 // If user has "cartCookie" header value
-                if (!Request.Headers.TryGetValue(Constants.CartCookie, out StringValues headerValues))
+                if (!Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
                 {
                     // Means user does not have a cart yet
                     return StatusCode(500);

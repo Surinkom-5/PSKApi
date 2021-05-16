@@ -7,6 +7,7 @@ namespace FlowerShop.Web.Post
 {
     public class CreateOrderModel
     {
+        public int? UserId { get; set; } // If order is created by registered user
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Comment { get; set; }

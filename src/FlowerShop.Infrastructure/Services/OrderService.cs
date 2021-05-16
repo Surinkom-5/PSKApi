@@ -20,13 +20,21 @@ namespace FlowerShop.Infrastructure.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly ILogger<OrderService> _logger;
+        private readonly IUserService _userService;
+        private readonly IAddressService _addressService;
+        private readonly IUserRepository _userRepository;
 
-        public OrderService(AppDbContext dbContext, IOrderRepository orderRepository, IShoppingCartRepository shoppingCartRepository, ILogger<OrderService> logger)
+        public OrderService(AppDbContext dbContext, IOrderRepository orderRepository,
+            IShoppingCartRepository shoppingCartRepository, ILogger<OrderService> logger, IUserService userService,
+            IAddressService addressService, IUserRepository userRepository)
         {
             _dbContext = dbContext;
             _orderRepository = orderRepository;
             _shoppingCartRepository = shoppingCartRepository;
             _logger = logger;
+            _userService = userService;
+            _addressService = addressService;
+            _userRepository = userRepository;
         }
 
         public async Task<Order> CreateOrder(CreateOrderModel orderModel)
@@ -46,7 +54,27 @@ namespace FlowerShop.Infrastructure.Services
 
                 await ReduceProductAvailability(_dbContext, cartItems);
 
-                var order = new Order(orderModel.Email, orderModel.PhoneNumber, orderModel.Comment, cart.Price, orderModel.FirstName, orderModel.LastName, orderModel.Address, orderModel.City, orderModel.PostCode);
+                int userId;
+                if (await _userRepository.CheckIfUserExists(orderModel.Email))
+                {
+                    // Means such a user already exists
+                    var userTemp = await _userRepository.GetUserByEmailAsync(orderModel.Email);
+                    userId = userTemp.UserId;
+                }
+                else
+                {
+                    // Create user
+                    userId = await _userService.AddUserAsync("unregistered user", orderModel.Email);
+                }
+
+                var user = await _userRepository.GetUserByIdAsync(userId);
+                user.SetPhoneNumber(orderModel.PhoneNumber);
+                await _dbContext.SaveChangesAsync();
+
+                var addressId = await _addressService.AddNewAddressAsync(userId, orderModel.Address, orderModel.City,
+                    orderModel.PostCode);
+                    
+                var order = new Order(userId, addressId, orderModel.Comment, cart.Price);
                 var createdOrder = await _dbContext.Orders.AddAsync(order);
 
                 if (createdOrder.Entity == null)
@@ -80,16 +108,19 @@ namespace FlowerShop.Infrastructure.Services
             try
             {
                 var idsToReduce = cartItems.Select(i => i.ProductId).ToList();
-                var productsToReduce = await dbContext.Products.Where(i => idsToReduce.Contains(i.ProductId)).ToListAsync();
+                var productsToReduce =
+                    await dbContext.Products.Where(i => idsToReduce.Contains(i.ProductId)).ToListAsync();
 
                 productsToReduce.ForEach(p =>
                 {
-                    var reducedAvailability = p.AvailabilityCount - cartItems.First(i => i.ProductId == p.ProductId).Quantity;
+                    var reducedAvailability =
+                        p.AvailabilityCount - cartItems.First(i => i.ProductId == p.ProductId).Quantity;
                     if (reducedAvailability < 0)
                     {
                         throw new InvalidOperationException(
                             $"Attempting to buy more of Product with id {p.ProductId} than is currently available.\n");
                     }
+
                     p.SetAvailabilityCount(reducedAvailability);
                 });
 

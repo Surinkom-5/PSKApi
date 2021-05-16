@@ -7,7 +7,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FlowerShop.Core.Constants;
+using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Services.Interfaces;
+using FlowerShop.Web.Extensions;
 using FlowerShop.Web.Patch;
 using FlowerShop.Web.Post;
 using Microsoft.Extensions.Primitives;
@@ -95,18 +97,30 @@ namespace FlowerShop.Web.Controllers
                     return BadRequest();
                 }
 
-                var result = await _orderService.CreateOrder(new Infrastructure.CustomModels.CreateOrderModel()
+                Order result;
+                if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    Email = body.Email,
-                    Comment = body.Comment,
-                    CartId = Guid.Parse(cartCookie),
-                    FirstName = body.FirstName,
-                    LastName = body.LastName,
-                    Address = body.Address,
-                    City = body.City,
-                    PostCode = body.PostCode,
-                    PhoneNumber = body.PhoneNumber
-                });
+                    result = await _orderService.CreateOrderForAuthenticatedUser(new Infrastructure.CustomModels.CreateOrderModel()
+                    {
+                        UserId = User.Identity.GetUserId(),
+                        AddressId = body.AddressId
+                    });
+                }
+                else
+                {
+                    result = await _orderService.CreateOrder(new Infrastructure.CustomModels.CreateOrderModel()
+                    {
+                        Email = body.Email,
+                        Comment = body.Comment,
+                        CartId = Guid.Parse(cartCookie),
+                        FirstName = body.FirstName,
+                        LastName = body.LastName,
+                        Address = body.Address,
+                        City = body.City,
+                        PostCode = body.PostCode,
+                        PhoneNumber = body.PhoneNumber
+                    });
+                }
 
                 return result is null ? StatusCode(500) : Ok(OrderViewModel.ToModel(result));
             }

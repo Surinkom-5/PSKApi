@@ -23,10 +23,11 @@ namespace FlowerShop.Infrastructure.Services
         private readonly IUserService _userService;
         private readonly IAddressService _addressService;
         private readonly IUserRepository _userRepository;
+        private readonly IAddressRepository _addressRepository;
 
         public OrderService(AppDbContext dbContext, IOrderRepository orderRepository,
             IShoppingCartRepository shoppingCartRepository, ILogger<OrderService> logger, IUserService userService,
-            IAddressService addressService, IUserRepository userRepository)
+            IAddressService addressService, IUserRepository userRepository, IAddressRepository addressRepository)
         {
             _dbContext = dbContext;
             _orderRepository = orderRepository;
@@ -35,6 +36,7 @@ namespace FlowerShop.Infrastructure.Services
             _userService = userService;
             _addressService = addressService;
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
         }
 
         public async Task<Order> CreateOrder(CreateOrderModel orderModel)
@@ -85,12 +87,7 @@ namespace FlowerShop.Infrastructure.Services
 
                 await _dbContext.SaveChangesAsync();
 
-                var orderItems = CartItem.ToOrderItems(cartItems, order.OrderId);
-                await _dbContext.OrderItems.AddRangeAsync(orderItems);
-                _dbContext.CartItems.RemoveRange(cartItems);
-                cart.SetPrice(0);
-                _dbContext.Carts.Update(cart);
-                await _dbContext.SaveChangesAsync();
+                await UpdateOrderItemsFromCart(_dbContext, cartItems, order.OrderId, cart);
 
                 await transaction.CommitAsync();
                 return createdOrder.Entity;
@@ -130,6 +127,66 @@ namespace FlowerShop.Infrastructure.Services
             {
                 _logger.LogError(e, "Exception occurred in OrderService: ReduceProductAvailability");
                 throw;
+            }
+        }
+
+        private async Task UpdateOrderItemsFromCart(AppDbContext dbContext, List<CartItem> cartItems, int orderId, Cart cart)
+        {
+            try
+            {
+                var orderItems = CartItem.ToOrderItems(cartItems, orderId);
+                await _dbContext.OrderItems.AddRangeAsync(orderItems);
+                dbContext.CartItems.RemoveRange(cartItems);
+                cart.SetPrice(0);
+                dbContext.Carts.Update(cart);
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred in OrderService: UpdateOrderItemsFromCart");
+                throw;
+            }
+        }
+
+        public async Task<Order> CreateOrderForAuthenticatedUser(CreateOrderModel orderModel)
+        {
+            await using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                // Get cart by user Id
+                var cart = await _shoppingCartRepository.GetCartByUserId((int) orderModel.UserId);
+                var cartItems = await _dbContext.CartItems.Where(c => c.CartId == cart.Id).ToListAsync();
+
+                if (cartItems == null || cartItems.Count <= 0 || cart == null)
+                {
+                    await transaction.RollbackAsync();
+                    return null;
+                }
+
+                await ReduceProductAvailability(_dbContext, cartItems);
+
+                var order = new Order((int)orderModel.UserId, (int)orderModel.AddressId, orderModel.Comment, cart.Price);
+                var createdOrder = await _dbContext.Orders.AddAsync(order);
+
+                if (createdOrder.Entity == null)
+                {
+                    await transaction.RollbackAsync();
+                    return null;
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                await UpdateOrderItemsFromCart(_dbContext, cartItems, order.OrderId, cart);
+
+                await transaction.CommitAsync();
+                return createdOrder.Entity;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred in OrderService: CreateOrder");
+                await transaction.RollbackAsync();
+                return null;
             }
         }
 

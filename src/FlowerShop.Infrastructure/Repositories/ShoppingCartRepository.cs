@@ -21,5 +21,12 @@ namespace FlowerShop.Infrastructure.Repositories
             await _dbContext.Entry(cart).Collection(c => c.CartItems).LoadAsync();
             return cart;
         }
+
+        public async Task<Cart> GetCartByUserId(int id)
+        {
+            var cart = await _dbContext.Carts.FirstOrDefaultAsync(c => c.UserId == id);
+            await _dbContext.Entry(cart).Collection(c => c.CartItems).LoadAsync();
+            return cart;
+        }
     }
 }

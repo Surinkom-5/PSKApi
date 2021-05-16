@@ -13,13 +13,15 @@ namespace FlowerShop.Infrastructure.Services
     {
         private readonly AppDbContext _dbContext;
         private readonly IProductRepository _productRepository;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly ILogger<ShoppingCartService> _logger;
 
-        public ShoppingCartService(AppDbContext dbContext, IProductRepository productRepository, ILogger<ShoppingCartService> logger)
+        public ShoppingCartService(AppDbContext dbContext, IProductRepository productRepository, ILogger<ShoppingCartService> logger, IShoppingCartRepository shoppingCartRepository)
         {
             _dbContext = dbContext;
             _productRepository = productRepository;
             _logger = logger;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
         public async Task<Cart> CreateCart()
@@ -28,6 +30,28 @@ namespace FlowerShop.Infrastructure.Services
             var createdCart = await _dbContext.AddAsync(cart);
             await _dbContext.SaveChangesAsync();
             return createdCart.Entity;
+        }
+
+        public async Task<Cart> GetUserCart(int userId)
+        {
+            try
+            {
+                // If a cart already exists - get it and return
+                var existingCart = await _shoppingCartRepository.GetCartByUserId(userId);
+                if (existingCart != null) return existingCart;
+
+                // Else-wise create a new cart for given user
+                var cart = new Cart(0);
+                cart.SetUser(userId);
+                var createdCart = await _dbContext.AddAsync(cart);
+                await _dbContext.SaveChangesAsync();
+                return createdCart.Entity;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception occurred in ShoppingCartService: GetUserCart");
+                throw;
+            }
         }
 
         public async Task<bool> AddItemToCart(string cartId, int itemId, int quantity)

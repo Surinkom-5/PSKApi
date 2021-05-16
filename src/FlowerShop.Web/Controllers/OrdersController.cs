@@ -83,20 +83,6 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                // If user has "cartCookie" header value
-                if (!Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
-                {
-                    // Means user does not have a cart yet
-                    return StatusCode(500);
-                }
-
-                var cartCookie = headerValues.FirstOrDefault();
-
-                if (cartCookie == null)
-                {
-                    return BadRequest();
-                }
-
                 Order result;
                 if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
@@ -108,6 +94,20 @@ namespace FlowerShop.Web.Controllers
                 }
                 else
                 {
+                    // If user has "cartCookie" header value
+                    if (!Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
+                    {
+                        // Means user does not have a cart yet
+                        return StatusCode(500);
+                    }
+
+                    var cartCookie = headerValues.FirstOrDefault();
+
+                    if (cartCookie == null)
+                    {
+                        return BadRequest();
+                    }
+
                     result = await _orderService.CreateOrder(new Infrastructure.CustomModels.CreateOrderModel()
                     {
                         Email = body.Email,

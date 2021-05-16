@@ -9,6 +9,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FlowerShop.Web.Extensions;
 
 namespace FlowerShop.Web.Controllers
 {
@@ -36,6 +37,14 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
+                // If user is authenticated
+                if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    var cart = await _shoppingCartService.GetUserCart(User.Identity.GetUserId());
+
+                    return cart is null ? NotFound() : Ok(CartViewModel.ToModel(cart));
+                }
+
                 // If user has "cartCookie" header value
                 if (Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
                 {

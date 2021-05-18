@@ -7,18 +7,18 @@ namespace FlowerShop.Web.Models
 {
     public class OrderViewModel
     {
-        public string PhoneNumber { get; set; }
+        public int Id { get; set; }
         public decimal TotalPrice { get; set; }
         public string Comment { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public int AddressId { get; set; }
-        public int UserId { get; set; }
+        public int? AddressId { get; set; }
+        public int? UserId { get; set; }
 
         public static OrderViewModel ToModel(Order order)
         {
             return new OrderViewModel
             {
-                PhoneNumber = order.PhoneNumber,
+                Id = order.OrderId,
                 TotalPrice = order.TotalPrice,
                 Comment = order.Comment,
                 OrderStatus = order.OrderStatus,

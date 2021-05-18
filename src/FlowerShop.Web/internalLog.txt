@@ -1,0 +1,72 @@
+2021-05-16 16:11:14.6336 Info Message Template Auto Format enabled
+2021-05-16 16:11:14.7184 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 16:11:14.8322 Info Adding target FileTarget(Name=alldata)
+2021-05-16 16:11:14.9922 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 17:01:51.3793 Info Message Template Auto Format enabled
+2021-05-16 17:01:51.4566 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:01:51.5628 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:01:51.7236 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 17:03:11.0915 Info Message Template Auto Format enabled
+2021-05-16 17:03:11.0915 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:03:11.1330 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:03:11.1490 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-16 17:03:11.1490 Info Configuration initialized.
+2021-05-16 17:03:11.1490 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-16 17:03:11.9184 Info AppDomain Shutting down. Logger closing...
+2021-05-16 17:03:11.9307 Info Logger has been shut down.
+2021-05-16 17:03:18.6636 Info Message Template Auto Format enabled
+2021-05-16 17:03:18.6636 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:03:18.7075 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:03:18.7218 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-16 17:03:18.7335 Info Configuration initialized.
+2021-05-16 17:03:18.7335 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-16 17:03:19.6330 Info AppDomain Shutting down. Logger closing...
+2021-05-16 17:03:19.6330 Info Logger has been shut down.
+2021-05-16 17:05:10.7457 Info Message Template Auto Format enabled
+2021-05-16 17:05:10.7457 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:05:10.7946 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:05:10.8113 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-16 17:05:10.8219 Info Configuration initialized.
+2021-05-16 17:05:10.8219 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-16 17:05:11.7063 Info AppDomain Shutting down. Logger closing...
+2021-05-16 17:05:11.7165 Info Logger has been shut down.
+2021-05-16 17:05:36.2504 Info Message Template Auto Format enabled
+2021-05-16 17:05:36.2504 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:05:36.2934 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:05:36.3099 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-16 17:05:36.3196 Info Configuration initialized.
+2021-05-16 17:05:36.3196 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-16 17:05:37.1140 Info AppDomain Shutting down. Logger closing...
+2021-05-16 17:05:37.1298 Info Logger has been shut down.
+2021-05-16 17:05:56.0059 Info Message Template Auto Format enabled
+2021-05-16 17:05:56.0151 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:05:56.0579 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:05:56.0735 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-16 17:05:56.0735 Info Configuration initialized.
+2021-05-16 17:05:56.0735 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-16 17:05:59.2838 Info AppDomain Shutting down. Logger closing...
+2021-05-16 17:05:59.2981 Info Logger has been shut down.
+2021-05-16 17:06:08.6631 Info Message Template Auto Format enabled
+2021-05-16 17:06:08.7463 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:06:08.8529 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:06:08.9995 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 17:26:50.3390 Info Message Template Auto Format enabled
+2021-05-16 17:26:50.4167 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:26:50.5274 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:26:50.6998 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 17:29:28.4832 Info Message Template Auto Format enabled
+2021-05-16 17:29:28.5572 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 17:29:28.6582 Info Adding target FileTarget(Name=alldata)
+2021-05-16 17:29:28.8100 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 18:48:55.6337 Info Message Template Auto Format enabled
+2021-05-16 18:48:55.7089 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 18:48:55.8176 Info Adding target FileTarget(Name=alldata)
+2021-05-16 18:48:55.9764 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 18:57:25.2529 Info Message Template Auto Format enabled
+2021-05-16 18:57:25.3272 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 18:57:25.4442 Info Adding target FileTarget(Name=alldata)
+2021-05-16 18:57:25.6109 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-16 18:59:50.1621 Info Message Template Auto Format enabled
+2021-05-16 18:59:50.2391 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-16 18:59:50.3473 Info Adding target FileTarget(Name=alldata)
+2021-05-16 18:59:50.5227 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config

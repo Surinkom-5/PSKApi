@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FlowerShop.Core.Entities
 {
@@ -19,6 +21,11 @@ namespace FlowerShop.Core.Entities
             CartId = cartId;
             ProductId = productId;
             Quantity = quantity;
+        }
+
+        public static List<OrderItem> ToOrderItems(List<CartItem> cartItems, int orderId)
+        {
+            return cartItems.Select(i => new OrderItem(i.Quantity, orderId, i.ProductId)).ToList();
         }
     }
 }

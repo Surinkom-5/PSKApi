@@ -21,5 +21,8 @@ namespace FlowerShop.Core.Entities
             Price = price;
             Id = Guid.NewGuid();
         }
+
+        public void SetPrice(decimal price) => Price = price;
+        public void SetUser(int id) => UserId = id;
     }
 }

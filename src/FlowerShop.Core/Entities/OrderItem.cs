@@ -11,5 +11,12 @@
         private OrderItem()
         {
         }
+
+        public OrderItem(int quantity, int orderId, int productId)
+        {
+            Quantity = quantity;
+            OrderId = orderId;
+            ProductId = productId;
+        }
     }
 }

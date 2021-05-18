@@ -11,16 +11,12 @@ namespace FlowerShop.Infrastructure.Data.Config
         {
             builder.HasKey(x => x.OrderId);
 
-            builder.Property(x => x.PhoneNumber)
-               .HasMaxLength(16)
-               .IsRequired();
-
             builder.Property(x => x.TotalPrice)
                 .HasColumnType("decimal(18,4)")
                .IsRequired();
 
             builder.Property(x => x.OrderStatus)
-               .HasDefaultValue(OrderStatus.InProgress)
+               .HasDefaultValue(OrderStatus.Confirmed)
                .IsRequired();
 
             builder.HasMany(x => x.OrderItems)

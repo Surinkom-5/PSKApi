@@ -7,6 +7,8 @@ namespace FlowerShop.Infrastructure.Services.Interfaces
     {
         public Task<Cart> CreateCart();
 
+        public Task<Cart> GetUserCart(int userId);
+
         public Task<bool> AddItemToCart(string cartId, int itemId, int quantity);
 
         public Task<bool> RemoveItemFromCart(string cartId, int itemId);

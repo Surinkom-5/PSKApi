@@ -92,11 +92,9 @@ namespace FlowerShop.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICartItemService, CartItemService>();
 
-            services.AddTransient<AnonymousOrderCreatorStrategy>();
-            services.AddTransient<RegularOrderCreatorStrategy>();
-
-            services.AddScoped<IOrderCreatorServiceFactory, OrderCreatorServiceFactory>();
+            services.AddSingleton<IOrderCreatorServiceFactory, OrderCreatorServiceFactory>();
 
             services.AddScoped<AnonymousOrderCreatorStrategy>()
                 .AddScoped<IOrderCreatorStrategy, AnonymousOrderCreatorStrategy>(s => s.GetService<AnonymousOrderCreatorStrategy>());

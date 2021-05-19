@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -78,11 +79,20 @@ namespace FlowerShop.Web
                 options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             //Register repositories
-            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped(s =>
+            {
+                var memoryCache = s.GetService<IMemoryCache>();
+                var dbContext = s.GetService<AppDbContext>();
+
+                IProductRepository concreteService = new ProductRepository(dbContext);
+                IProductRepository cachingDecorator = new ProductRepositoryCachingDecorator(concreteService, memoryCache);
+
+                return cachingDecorator;
+            });
 
             //Register Services
             services.AddScoped<IProductService, ProductService>();

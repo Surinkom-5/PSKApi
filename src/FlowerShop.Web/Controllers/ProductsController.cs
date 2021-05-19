@@ -6,6 +6,7 @@ using FlowerShop.Web.Patch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlowerShop.Web.Controllers
@@ -38,6 +39,26 @@ namespace FlowerShop.Web.Controllers
                 var product = await _productRepository.GetProductByIdAsync(productId);
 
                 return product is null ? NotFound() : Ok(ProductViewModel.ToModel(product));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception Occured in Product Controller, get product");
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Gets category types which have a product
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("/api/Categories")]
+        public async Task<IActionResult> GetCategories()
+        {
+            try
+            {
+                var categories = await _productRepository.GetAvailableProductTypesAsync();
+
+                return categories.Any() ? Ok(CategoryViewModel.ToModel(categories)) : NotFound();
             }
             catch (Exception ex)
             {

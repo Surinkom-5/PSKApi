@@ -19,6 +19,11 @@ namespace FlowerShop.Infrastructure.Repositories
             _dbContext = context;
         }
 
+        public async Task<List<ProductType>> GetAvailableProductTypesAsync()
+        {
+            return await _dbContext.Products.GroupBy(x => x.ProductType).Select(x => x.Key).ToListAsync();
+        }
+
         public async Task<Product> GetProductByIdAsync(int productId)
         {
             return await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == productId);

@@ -2,6 +2,7 @@
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Api;
+using FlowerShop.Web.Extensions;
 using FlowerShop.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,6 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FlowerShop.Web.Extensions;
 
 namespace FlowerShop.Web.Controllers
 {
@@ -58,7 +58,7 @@ namespace FlowerShop.Web.Controllers
                     // Means user does not have a cart yet
                     var cart = await _shoppingCartService.CreateCart();
 
-                    if (cart is null) return StatusCode(500);
+                    if (cart is null) return BadRequest();
 
                     Response.Headers.Add(CookieConstants.CartCookie, cart.Id.ToString());
                     return Ok(CartViewModel.ToModel(cart));

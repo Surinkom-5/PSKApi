@@ -1,11 +1,11 @@
 ﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Data;
+using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
-using Microsoft.Extensions.Logging;
 
 namespace FlowerShop.Infrastructure.Services
 {

@@ -93,6 +93,17 @@ namespace FlowerShop.Web
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IOrderService, OrderService>();
 
+            services.AddTransient<AnonymousOrderCreatorStrategy>();
+            services.AddTransient<RegularOrderCreatorStrategy>();
+
+            services.AddScoped<IOrderCreatorServiceFactory, OrderCreatorServiceFactory>();
+
+            services.AddScoped<AnonymousOrderCreatorStrategy>()
+                .AddScoped<IOrderCreatorStrategy, AnonymousOrderCreatorStrategy>(s => s.GetService<AnonymousOrderCreatorStrategy>());
+
+            services.AddScoped<RegularOrderCreatorStrategy>()
+                .AddScoped<IOrderCreatorStrategy, RegularOrderCreatorStrategy>(s => s.GetService<RegularOrderCreatorStrategy>());
+
             //Configure swagger
             services.AddSwaggerGen(c =>
             {

@@ -2,7 +2,6 @@
 using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Helpers;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;

@@ -23,6 +23,7 @@ namespace FlowerShop.Core.Entities
         }
 
         public void SetPrice(decimal price) => Price = price;
+
         public void SetUser(int id) => UserId = id;
     }
 }

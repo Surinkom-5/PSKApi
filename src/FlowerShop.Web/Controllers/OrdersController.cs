@@ -1,18 +1,18 @@
-﻿using FlowerShop.Infrastructure.Repositories.Interfaces;
+﻿using FlowerShop.Core.Constants;
+using FlowerShop.Core.Entities;
+using FlowerShop.Infrastructure.Repositories.Interfaces;
+using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Api;
+using FlowerShop.Web.Extensions;
 using FlowerShop.Web.Models;
+using FlowerShop.Web.Patch;
+using FlowerShop.Web.Post;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FlowerShop.Core.Constants;
-using FlowerShop.Core.Entities;
-using FlowerShop.Infrastructure.Services.Interfaces;
-using FlowerShop.Web.Extensions;
-using FlowerShop.Web.Patch;
-using FlowerShop.Web.Post;
-using Microsoft.Extensions.Primitives;
 
 namespace FlowerShop.Web.Controllers
 {
@@ -84,13 +84,9 @@ namespace FlowerShop.Web.Controllers
             try
             {
                 Order result;
-                if (User.Identity != null && User.Identity.IsAuthenticated)
+                if (User.Identity.IsAuthenticated)
                 {
-                    result = await _orderService.CreateOrderForAuthenticatedUser(new Infrastructure.CustomModels.CreateOrderModel()
-                    {
-                        UserId = User.Identity.GetUserId(),
-                        AddressId = body.AddressId
-                    });
+                    result = await _orderService.CreateOrder(body.ToCreateOrderModel(User.Identity.GetUserId()));
                 }
                 else
                 {
@@ -98,31 +94,15 @@ namespace FlowerShop.Web.Controllers
                     if (!Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
                     {
                         // Means user does not have a cart yet
-                        return StatusCode(500);
+                        return BadRequest();
                     }
 
                     var cartCookie = headerValues.FirstOrDefault();
 
-                    if (cartCookie == null)
-                    {
-                        return BadRequest();
-                    }
-
-                    result = await _orderService.CreateOrder(new Infrastructure.CustomModels.CreateOrderModel()
-                    {
-                        Email = body.Email,
-                        Comment = body.Comment,
-                        CartId = Guid.Parse(cartCookie),
-                        FirstName = body.FirstName,
-                        LastName = body.LastName,
-                        Address = body.Address,
-                        City = body.City,
-                        PostCode = body.PostCode,
-                        PhoneNumber = body.PhoneNumber
-                    });
+                    result = await _orderService.CreateOrder(body.ToCreateOrderModel(null, Guid.Parse(cartCookie)));
                 }
 
-                return result is null ? StatusCode(500) : Ok(OrderViewModel.ToModel(result));
+                return result is null ? BadRequest() : Ok(OrderViewModel.ToModel(result));
             }
             catch (Exception e)
             {
@@ -144,7 +124,7 @@ namespace FlowerShop.Web.Controllers
             {
                 var result = await _orderService.ChangeOrderStatus(orderId, orderStatusPatch.OrderStatus);
 
-                return result ? Ok() : StatusCode(500);
+                return result ? Ok() : BadRequest();
             }
             catch (Exception e)
             {

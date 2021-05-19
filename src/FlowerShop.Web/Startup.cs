@@ -38,6 +38,15 @@ namespace FlowerShop.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000");
+                    });
+            });
+
             services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
@@ -130,6 +139,7 @@ namespace FlowerShop.Web
         public void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
+            app.UseCors();
 
             app.UseHttpsRedirection();
 

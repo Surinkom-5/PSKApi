@@ -33,12 +33,10 @@ namespace FlowerShop.Web.Controllers
         /// <param name="productId"></param>
         /// <returns></returns>
         [HttpGet("{productId}")]
-        [Authorize]
         public async Task<IActionResult> GetProductAsync([FromRoute] int productId)
         {
             try
             {
-                throw new Exception("debug");
                 var product = await _productRepository.GetProductByIdAsync(productId);
 
                 return product is null ? NotFound() : Ok(ProductViewModel.ToModel(product));

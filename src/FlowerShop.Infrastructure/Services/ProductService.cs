@@ -1,6 +1,9 @@
 ﻿using FlowerShop.Core.Entities;
 using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.Data;
+using FlowerShop.Infrastructure.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure.Services
@@ -9,7 +12,8 @@ namespace FlowerShop.Infrastructure.Services
     {
         public Task<int> CreateProductAsync(string name, decimal price, string description, ProductType productType);
 
-        public Task<bool> UpdateProductAsync(int id, string name, decimal? price, string description, int? quantity);
+        public Task<BaseResponse> UpdateProductAsync(int id, string name, decimal? price, string description, int? quantity,
+            byte[] version);
 
         public Task<bool> RemoveProductAsync(int productId);
     }
@@ -32,20 +36,42 @@ namespace FlowerShop.Infrastructure.Services
             return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateProductAsync(int id, string name, decimal? price, string description, int? quantity)
+        public async Task<BaseResponse> UpdateProductAsync(int id, string name, decimal? price, string description, int? quantity,
+            byte[] version)
         {
             var productToUpdate = await _productRepository.GetProductByIdAsync(id);
-
             if (productToUpdate == null)
             {
-                return false;
+                return new BaseResponse("Product not found");
             }
+            try
+            {
+                productToUpdate.UpdateProductDetails(name, price, description, quantity);
+                _dbContext.Entry(productToUpdate).CurrentValues.SetValues(productToUpdate);
 
-            productToUpdate.UpdateProductDetails(name, price, description, quantity);
-            _dbContext.Entry(productToUpdate).CurrentValues.SetValues(productToUpdate);
+                //TODO: used in order to simulate optimistic lock 
+                await Task.Delay(3000);
 
-            await _dbContext.SaveChangesAsync();
-            return true;
+                _dbContext.Entry(productToUpdate).OriginalValues[nameof(productToUpdate.Timestamp)] = version;
+                await _dbContext.SaveChangesAsync();
+                return new BaseResponse();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var entry = ex.Entries.Single();
+                var databaseEntry = entry.GetDatabaseValues();
+                if (databaseEntry == null)
+                {
+                    return new BaseResponse("Unable to save changes. Product was deleted by another user.");
+                }
+                else
+                {
+                    var databaseValues = (Product)databaseEntry.ToObject();
+                    productToUpdate.SetTimeStamp(databaseValues.Timestamp);
+                    return new BaseResponse("The product you attempted to edit "
+                        + "was modified by another user after you got the original value.");
+                }
+            }
         }
 
         public async Task<bool> RemoveProductAsync(int productId)

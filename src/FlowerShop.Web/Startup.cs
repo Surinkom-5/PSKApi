@@ -102,6 +102,9 @@ namespace FlowerShop.Web
             services.AddScoped<RegularOrderCreatorStrategy>()
                 .AddScoped<IOrderCreatorStrategy, RegularOrderCreatorStrategy>(s => s.GetService<RegularOrderCreatorStrategy>());
 
+            //Used by nlog to get user identity
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             //Configure swagger
             services.AddSwaggerGen(c =>
             {

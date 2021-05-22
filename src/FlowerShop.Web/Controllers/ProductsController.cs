@@ -3,6 +3,7 @@ using FlowerShop.Infrastructure.Services;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Models;
 using FlowerShop.Web.Patch;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -32,10 +33,12 @@ namespace FlowerShop.Web.Controllers
         /// <param name="productId"></param>
         /// <returns></returns>
         [HttpGet("{productId}")]
+        [Authorize]
         public async Task<IActionResult> GetProductAsync([FromRoute] int productId)
         {
             try
             {
+                throw new Exception("debug");
                 var product = await _productRepository.GetProductByIdAsync(productId);
 
                 return product is null ? NotFound() : Ok(ProductViewModel.ToModel(product));
@@ -120,9 +123,10 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                var success = await _productService.UpdateProductAsync(productId, productPatch.Name, productPatch.Price, productPatch.Description, productPatch.Quantity);
+                var response = await _productService.UpdateProductAsync(productId, productPatch.Name, productPatch.Price,
+                    productPatch.Description, productPatch.Quantity, productPatch.Version);
 
-                return success ? Ok() : NotFound();
+                return response.Success ? Ok() : BadRequest(response.Error);
             }
             catch (Exception e)
             {
@@ -136,7 +140,7 @@ namespace FlowerShop.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{productId}")]
-        public async Task<IActionResult> PathUserAddress([FromRoute] int productId)
+        public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
         {
             try
             {

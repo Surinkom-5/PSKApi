@@ -12,6 +12,28 @@ namespace FlowerShop.Infrastructure
 {
     public static class SeedData
     {
+        private static List<String> ImageUrls = new List<string>
+        {
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/rose.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/lilly.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696629/tulip.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696629/white_rose.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621695939/sunflower.webp",
+
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/bouquet_1.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621011506/bouquet_2.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/bouquet_3.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/bouquet_4.jpg",
+
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/cactus_small.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/cactus_medium.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697520/papartis.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/begonia_g0y463.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/katil%C4%97lis_u1gica.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/raktazole_wnwjvk.jpg",
+            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/kalanke.jpg"
+        };
+
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using var dbContext = new AppDbContext(
@@ -42,22 +64,52 @@ namespace FlowerShop.Infrastructure
             }
             var products = new List<Product>
             {
-                new Product("Rose", 9.99m, "A rose is a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears.",
+                // Flowers
+                new Product("Rožė", 9.99m, "Rožės dažnai laikomos dieviškumo, tobulo grožio, o raudonosios – meilės simboliu. Vakarų pasaulyje rožė laikoma kilmingiausia gėle. Jos atskirai ar puokštėse dovanojamos įvairiomis progomis.",
                     ProductType.Flower),
-                new Product("Lily", 9.99m, "Lilium (members of which are true lilies) is a genus of herbaceous flowering plants growing from bulbs, all with large prominent flowers.",
+                new Product("Lelija", 5.49m, "lelijinių (Liliaceae) šeimos augalų gentis, kuriai priklauso daugiametės svogūninės žolės, turinčios kiaušiniškus svogūnus ir stačius lapuotus stiebus. Lapai dažniausiai siauri, bekočiai. Žiedai įvairių spalvų ir dydžio, vienų rūšių nusvirę, kitų statūs, sukrauti kekėse ar išaugę pavieniui.",
                     ProductType.Flower),
-                new Product("Lavender bouquet", 19.99m, "Lavandula (common name lavender) is a genus of 47 known species of flowering plants in the mint family, Lamiaceae.",
+                new Product("Tulip ", 4.99m, "lelijinių augalų (Liliaceae) gentis. Joms būdingi dideli šešių žiedlapių žiedai. Iš viso yra apie 100 rūšių, Lietuvoje auginamos tik kaip dekoratyviniai augalai. Tulpės kilusios iš pietų Europos, Šiaurės Afrikos ir Azijos ",
+                    ProductType.Flower),
+                new Product("Baltoji rožė", 9.99m, "Rožės dažnai laikomos dieviškumo, tobulo grožio, o raudonosios – meilės simboliu. Vakarų pasaulyje rožė laikoma kilmingiausia gėle. Jos atskirai ar puokštėse dovanojamos įvairiomis progomis.", 
+                    ProductType.Flower),
+                new Product("Saulėgraža", 7.99m, "dideli žiedynai atrodo kaip saulė; be to, jie dažniausiai būna pasisukę į saulės pusę.", 
+                    ProductType.Flower),
+
+                // Bouquets
+                new Product("Puokštė \"Pavasarinis grožis\"", 35.00m, "Puokštė jai arba jam. Tobulai tinkanti sodraus vėlyvo pavasario progoms.",
                     ProductType.Bouquet),
-                new Product("Albuca spiralis", 13.99m, "Albuca spiralis, commonly called the corkscrew albuca, is a species of flowering plant in the family Asparagaceae, that is native to Western and Northern Cape Provinces, South Africa.",
+                new Product("Puokštė \"Alpių rasa\"", 25.00m, "Puokštė, kupina gaivių prisiminimų.",
+                    ProductType.Bouquet),
+                new Product("Puokštė \"Pavasario rytas\"", 39.00m, "Nuostabi puokštė jūsų artimųjų rytą pavers saulėtu ir gražiu.",
+                    ProductType.Bouquet),
+                new Product("Puokštė \"Švelnūs jausmai\"", 48.00m, "Puokštės sudėtis: rožės, eustomos, eukaliptas.",
+                    ProductType.Bouquet),
+
+                // Potter plants
+                new Product("Miniatiūrinis kaktusas vazone (mažas)", 7.99m, "Kaktusai – tai augalai, prisitaikę augti pačiomis nepalankiausiomis sąlygomis, kai trūksta drėgmės, kai pastovios aukštos temperatūros ir kepina saulė. Dažniausiai – tai dykvietės, smėlynai, dykumos ir kitos nepalankios augimvietės. Todėl kaktusus reikia auginti ypač skurdžioje vandeniui pralaidžioje smėlėtoje dirvoje su geru drenažu. Laikyti ypač šviesioje, saulėtoje, šiltoje vietoje. tik tuomet augalas bus kompaktiškas ir gražus, įgaus jam būdingą spalvą. Tamsoje augalai tįsta ir deformuojasi. Laistyti ir tręšti ypač saikingai.  Vasarą laistyti kartą ar du per mėnesį, galima ir rečiau. Tręšti ne dažniau kaip 1 kartą per mėnesį ar du. Žiemą, kai tamsu ir augalas yra ramybės stadijoje, laistyti dar rečiau. Darykite poros mėnesių pertraukas. Neperlaistykite augalo, nepakenčia užmirkimo. Kai per daug drėgmės, pūna augalo šaknys. Vasarą puikiai jaučiasi balkone, terasoje gryname ore.",
                     ProductType.PotterPlant),
-                new Product("Tulip ", 4.99m, "Tulips (Tulipa) form a genus of spring-blooming perennial herbaceous bulbiferous geophytes (having bulbs as storage organs).",
-                    ProductType.Flower),
-                new Product("Bouquet for You", 29.99m, "These flowers are sure to bring one good energy and joy! Nice and beautiful bouquet of gerbera for every occasion.",
-                    ProductType.Bouquet),
+                new Product("Miniatiūrinis kaktusas vazone (vidutinis)", 15.49m, "Kaktusai – tai augalai, prisitaikę augti pačiomis nepalankiausiomis sąlygomis, kai trūksta drėgmės, kai pastovios aukštos temperatūros ir kepina saulė. Dažniausiai – tai dykvietės, smėlynai, dykumos ir kitos nepalankios augimvietės. Todėl kaktusus reikia auginti ypač skurdžioje vandeniui pralaidžioje smėlėtoje dirvoje su geru drenažu. Laikyti ypač šviesioje, saulėtoje, šiltoje vietoje. tik tuomet augalas bus kompaktiškas ir gražus, įgaus jam būdingą spalvą. Tamsoje augalai tįsta ir deformuojasi. Laistyti ir tręšti ypač saikingai.  Vasarą laistyti kartą ar du per mėnesį, galima ir rečiau. Tręšti ne dažniau kaip 1 kartą per mėnesį ar du. Žiemą, kai tamsu ir augalas yra ramybės stadijoje, laistyti dar rečiau. Darykite poros mėnesių pertraukas. Neperlaistykite augalo, nepakenčia užmirkimo. Kai per daug drėgmės, pūna augalo šaknys. Vasarą puikiai jaučiasi balkone, terasoje gryname ore.",
+                    ProductType.PotterPlant),
+                new Product("Papartis", 3.50m, "Inkstpapartis (Nephrolepis). Turi plunksniškus, karpytus lapus, ilgus šakniastiebius. Kilęs iš paatogrąžių, laisvai auga drėgnuose miškuose. Laikymas: pietryčių ir pietvakarių pusė. Vasarą galima laikyti lauke. \nApšvietimas: vasarą reikalinga labiau pavėsinga vieta.",
+                    ProductType.PotterPlant),
+                new Product("Begonija", 8.49m, "Priklauso begoninių šeimai, natūraliai auga Azijos ir Amerikos atogrąžų miškuose. Augalų gentis išsiskiria asimetriškais lapais, gali būti įvairių formų ir spalvų. Žiedai būna tuščiaviduriai arba pilnaviduriai, įvairių spalvų.\r\nLaikymas: parinkti nesaulėtą, gerai vėdinamą kambario vietą. Rytinė arba vakarinė palangė.\r\nApšvietimas: saugoti nuo tiesioginių saulės spindulių. Jie gali nudeginti augalą.\r\nTemperatūra: 20–25 °C.\r\nLaistymas: vasarą gausus, žiemą – rečiau. Vanduo turi būti minkštas.\r\nRamybės laikotarpis: pavasarį reikalinga vėsesnė patalpa ir retesnis laistymas.",
+                    ProductType.PotterPlant),
+                new Product("Katilėlis", 4.49m, "Natūraliai auga Viduržemio jūros regione, priklauso katilėlinių augalų grupei. Auga besidriekiančiu krūmeliu 15 - 20 cm aukščio. Daugiametis žolinis augalas, turi varpelio formos baltus ar mėlynus žiedus. Auginamas pastatomuose arba pakabinamuose vazonuose.\r\nLaikymas: rytinėje arba pietinėje pusėje. Vasarą auginama lauke.\r\nApšvietimas: šviesi arba labai ryški vieta. Jeigu trūksta šviesos, augalas pradeda skursti.\r\nTemperatūra: 20–25 °C.",
+                    ProductType.PotterPlant),
+                new Product("Raktažolė", 3.49m, "Šviesiai žalios spalvos lapai, raukšlėti. Žiedai smulkūs, kvepiantys, pilnaviduriai arba tuščiaviduriai gali būti įvairiausių spalvų. Dažniausiai auginama kaip vienmetė, tačiau galima auginti ir visus metus.\r\nLaikymas: šiaurinė palangė.\r\nApšvietimas: saugoti nuo tiesioginių saulės spindulių. Jie gali nudeginti augalą. Reikia išsklaidytos šviesos, jeigu pradeda trūkti jos, augalas tįsta ir pradeda anksčiau žydėti, prastesniais žiedais.\r\nTemperatūra: 10–15°C.",
+                    ProductType.PotterPlant),
+                new Product("Kalankė", 6.99m, "Sukulentinė, ypač ilgai žydinti gėlė, kuri gali džiuginti įvairiaspalviais žiedais visus metus. Kilusi iš Madagaskaro, puikiai auga ir mūsų namų sąlygomis.\r\nLaikymas: vakarinė ir rytinė palangė. Žiemą perkelti ant pietinės.\r\nApšvietimas: mėgsta šviesią vietą, tačiau nepakenčia tiesioginių saulės spindulių.\r\nTemperatūra: 12–30 °C.",
+                    ProductType.PotterPlant),
             };
 
             products.ForEach(x => x.SetAvailabilityCount(5));
             products.Last().SetAvailabilityCount(0);
+
+            for (var i = 0; i < products.Count; i++)
+            {
+                products[i].SetImageUrl(ImageUrls[i]);
+            }
 
             dbContext.Products.AddRange(products);
 

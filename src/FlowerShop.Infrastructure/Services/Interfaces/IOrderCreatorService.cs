@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure.Services.Interfaces
 {
-    public interface IOrderService
+    public interface IOrderCreatorStrategy
     {
-        public Task<Order> CreateOrder(CreateOrderModel orderModel);
-
-        public Task<bool> ChangeOrderStatus(int orderId, string orderStatus);
+        public Task<Order> CreateOrderAsync(CreateOrderModel orderModel);
     }
 }

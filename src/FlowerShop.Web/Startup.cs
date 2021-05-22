@@ -101,6 +101,15 @@ namespace FlowerShop.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ICartItemService, CartItemService>();
+
+            services.AddSingleton<IOrderCreatorServiceFactory, OrderCreatorServiceFactory>();
+
+            services.AddScoped<AnonymousOrderCreatorStrategy>()
+                .AddScoped<IOrderCreatorStrategy, AnonymousOrderCreatorStrategy>(s => s.GetService<AnonymousOrderCreatorStrategy>());
+
+            services.AddScoped<RegularOrderCreatorStrategy>()
+                .AddScoped<IOrderCreatorStrategy, RegularOrderCreatorStrategy>(s => s.GetService<RegularOrderCreatorStrategy>());
 
             //Configure swagger
             services.AddSwaggerGen(c =>

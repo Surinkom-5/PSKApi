@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FlowerShop.Core.Enums;
+﻿using FlowerShop.Core.Enums;
 
 namespace FlowerShop.Core.Entities
 {
@@ -31,22 +30,22 @@ namespace FlowerShop.Core.Entities
 
         public void UpdateProductDetails(string name, decimal? price, string description, int? quantity)
         {
-            if(name != null)
+            if (name != null)
             {
                 Name = name;
             }
 
-            if(price.HasValue)
+            if (price.HasValue)
             {
                 Price = (decimal)price;
             }
 
-            if(description != null)
+            if (description != null)
             {
                 Description = description;
             }
 
-            if(quantity.HasValue)
+            if (quantity.HasValue)
             {
                 AvailabilityCount = (int)quantity;
             }

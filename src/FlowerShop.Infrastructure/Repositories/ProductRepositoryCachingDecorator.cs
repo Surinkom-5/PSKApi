@@ -1,7 +1,6 @@
 ﻿using FlowerShop.Core.Constants;
 using FlowerShop.Core.Entities;
 using FlowerShop.Core.Enums;
-using FlowerShop.Infrastructure.Repositories.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -43,6 +42,5 @@ namespace FlowerShop.Infrastructure.Repositories
         {
             return await _productRepository.GetProductsByFiltersAsync(searchText, productType);
         }
-
     }
 }

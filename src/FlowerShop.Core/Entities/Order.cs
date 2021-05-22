@@ -14,7 +14,6 @@ namespace FlowerShop.Core.Entities
         public int? UserId { get; private set; }
         public User User { get; private set; }
 
-
         private readonly List<OrderItem> _orderItems = new();
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 

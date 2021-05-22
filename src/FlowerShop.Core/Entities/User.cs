@@ -33,5 +33,7 @@ namespace FlowerShop.Core.Entities
         public void SetPhoneNumber(string phoneNumber) => PhoneNumber = phoneNumber;
 
         public void SetUserRole(UserRole userRole) => UserRole = userRole;
+
+        public void AddAddress(Address address) => _addresses.Add(address);
     }
 }

@@ -82,3 +82,62 @@
 2021-05-22 18:45:40.9133 Info Loading assembly: NLog.Web.AspNetCore
 2021-05-22 18:45:41.0218 Info Adding target FileTarget(Name=alldata)
 2021-05-22 18:45:41.1700 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-22 19:10:49.1111 Info Message Template Auto Format enabled
+2021-05-22 19:10:49.1881 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:10:49.3033 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:10:49.4830 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-22 19:11:47.0938 Info Message Template Auto Format enabled
+2021-05-22 19:11:47.1633 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:11:47.2852 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:11:47.4490 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-22 19:13:04.2995 Info Message Template Auto Format enabled
+2021-05-22 19:13:04.3062 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:13:04.3426 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:13:04.3584 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-22 19:13:04.3688 Info Configuration initialized.
+2021-05-22 19:13:04.3688 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-22 19:14:02.5619 Info Configuration file change detected! Reloading in 1000ms...
+2021-05-22 19:14:02.5619 Info Configuration file change detected! Reloading in 1000ms...
+2021-05-22 19:14:02.5619 Info Configuration file change detected! Reloading in 1000ms...
+2021-05-22 19:14:03.0486 Info AppDomain Shutting down. Logger closing...
+2021-05-22 19:14:03.0617 Info Logger has been shut down.
+2021-05-22 19:14:03.3608 Info Message Template Auto Format enabled
+2021-05-22 19:14:03.3666 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:14:03.3941 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:14:03.4090 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-22 19:14:03.4195 Info Configuration initialized.
+2021-05-22 19:14:03.4195 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-22 19:14:04.7705 Info AppDomain Shutting down. Logger closing...
+2021-05-22 19:14:04.7949 Info Logger has been shut down.
+2021-05-22 19:14:20.4522 Info Message Template Auto Format enabled
+2021-05-22 19:14:20.5309 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:14:20.6338 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:14:20.7828 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-22 19:16:35.0099 Info Message Template Auto Format enabled
+2021-05-22 19:16:35.0890 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:16:35.1945 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:16:35.3553 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-22 19:17:30.6183 Info Message Template Auto Format enabled
+2021-05-22 19:17:30.6935 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:17:30.8027 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:17:30.9539 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-22 19:30:52.7159 Info Message Template Auto Format enabled
+2021-05-22 19:30:52.7159 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:30:52.7579 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:30:52.7783 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-22 19:30:52.7917 Info Configuration initialized.
+2021-05-22 19:30:52.7917 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-22 19:30:53.6285 Info AppDomain Shutting down. Logger closing...
+2021-05-22 19:30:53.6391 Info Logger has been shut down.
+2021-05-22 19:31:01.0670 Info Message Template Auto Format enabled
+2021-05-22 19:31:01.0729 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:31:01.1070 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:31:01.1223 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\NLog.config
+2021-05-22 19:31:01.1328 Info Configuration initialized.
+2021-05-22 19:31:01.1328 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.9.12899. Product version: 4.7.9+e8712e62842e2d74d60fdf37cf74d743750e5ca2. GlobalAssemblyCache: False
+2021-05-22 19:31:02.7176 Info AppDomain Shutting down. Logger closing...
+2021-05-22 19:31:02.7278 Info Logger has been shut down.
+2021-05-22 19:31:11.3881 Info Message Template Auto Format enabled
+2021-05-22 19:31:11.4679 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-22 19:31:11.5705 Info Adding target FileTarget(Name=alldata)
+2021-05-22 19:31:11.7405 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config

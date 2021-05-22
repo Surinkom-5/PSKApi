@@ -12,7 +12,7 @@ namespace FlowerShop.Infrastructure
 {
     public static class SeedData
     {
-        private static List<String> ImageUrls = new List<string>
+        private static readonly List<string> ImageUrls = new ()
         {
             "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/rose.jpg",
             "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/lilly.jpg",
@@ -62,6 +62,7 @@ namespace FlowerShop.Infrastructure
             {
                 return;   // DB has been seeded
             }
+
             var products = new List<Product>
             {
                 // Flowers

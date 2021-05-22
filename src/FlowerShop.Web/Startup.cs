@@ -43,8 +43,12 @@ namespace FlowerShop.Web
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:57678");
-                        builder.WithOrigins("http://localhost:3000");
+                        builder.WithOrigins("http://localhost:57678")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
 

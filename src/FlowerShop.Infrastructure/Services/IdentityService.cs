@@ -15,7 +15,7 @@ namespace FlowerShop.Infrastructure.Services
 {
     public interface IIdentityService
     {
-        public Task<RegistrationResponseModel> RegisterAsync(string email, string name, string password);
+        public Task<RegistrationResponse> RegisterAsync(string email, string name, string password);
 
         public Task<(string token, string error)> LoginAsync(string email, string password);
     }
@@ -38,13 +38,13 @@ namespace FlowerShop.Infrastructure.Services
             _userRepository = userRepository;
         }
 
-        public async Task<RegistrationResponseModel> RegisterAsync(string email, string name, string password)
+        public async Task<RegistrationResponse> RegisterAsync(string email, string name, string password)
         {
             var existingUser = await _userManager.FindByEmailAsync(email);
 
             if (existingUser != null)
             {
-                return new RegistrationResponseModel() { Errors = new List<string>() { "User already exists" } };
+                return new RegistrationResponse() { Errors = new List<string>() { "User already exists" } };
             }
 
             var newUser = new IdentityUser() { Email = email, UserName = email };
@@ -55,10 +55,10 @@ namespace FlowerShop.Infrastructure.Services
 
                 var jwtToken = GenerateJwtToken(newUser, userId.ToString());
 
-                return new RegistrationResponseModel() { Token = jwtToken };
+                return new RegistrationResponse() { Token = jwtToken };
             }
 
-            return new RegistrationResponseModel() { Errors = isCreated.Errors.Select(x => x.Description).ToList() };
+            return new RegistrationResponse() { Errors = isCreated.Errors.Select(x => x.Description).ToList() };
         }
 
         public async Task<(string token, string error)> LoginAsync(string email, string password)
@@ -97,6 +97,7 @@ namespace FlowerShop.Infrastructure.Services
                 {
                 new Claim(ClaimsConstants.Id, user.Id),
                 new Claim(ClaimsConstants.UserId, userId),
+                new Claim(ClaimTypes.Name, user.Email), //Used by nlog to track user
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
             }),
                 Expires = DateTime.UtcNow.AddHours(6),

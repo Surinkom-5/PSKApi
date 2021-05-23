@@ -2,6 +2,7 @@
 using FlowerShop.Core.Enums;
 using FlowerShop.Infrastructure.CustomModels;
 using FlowerShop.Infrastructure.Data;
+using FlowerShop.Infrastructure.Models;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,7 @@ namespace FlowerShop.Infrastructure.Services
             _orderRepository = orderRepository;
         }
 
-        public async Task<Order> CreateOrder(CreateOrderModel orderModel)
+        public async Task<CreateOrderResponse> CreateOrder(CreateOrderModel orderModel)
         {
             return await _orderCreatorStrategy.CreateOrderAsync(orderModel);
         }

@@ -11,6 +11,7 @@ namespace FlowerShop.Core.Entities
         public int AvailabilityCount { get; private set; }
         public ProductType ProductType { get; private set; }
         public string ImageUrl { get; private set; }
+        public byte[] Timestamp { get; private set; }
 
         private Product()
         {
@@ -25,6 +26,7 @@ namespace FlowerShop.Core.Entities
         }
 
         public void SetImageUrl(string imageUrl) => ImageUrl = imageUrl;
+        public void SetTimeStamp(byte[] timestamp) => Timestamp = timestamp;
 
         public void SetAvailabilityCount(int newCount) => AvailabilityCount = newCount;
 

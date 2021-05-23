@@ -13,6 +13,7 @@ namespace FlowerShop.Web.Models
         public string ProductType { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
+        public byte[] Version { get; set; }
 
         public static ProductViewModel ToModel(Product product)
         {
@@ -24,7 +25,8 @@ namespace FlowerShop.Web.Models
                 Description = product.Description,
                 ProductType = product.ProductType.ToString(),
                 Quantity = product.AvailabilityCount,
-                Image = product.ImageUrl
+                Image = product.ImageUrl,
+                Version = product.Timestamp
             };
         }
 

@@ -141,3 +141,79 @@
 2021-05-22 19:31:11.4679 Info Loading assembly: NLog.Web.AspNetCore
 2021-05-22 19:31:11.5705 Info Adding target FileTarget(Name=alldata)
 2021-05-22 19:31:11.7405 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 13:37:51.2311 Info Message Template Auto Format enabled
+2021-05-23 13:37:51.3184 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 13:37:51.5049 Info Adding target FileTarget(Name=alldata)
+2021-05-23 13:37:51.7270 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:40:58.4434 Info Message Template Auto Format enabled
+2021-05-23 14:40:58.5129 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:40:58.6295 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:40:58.7921 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:43:32.4387 Info Message Template Auto Format enabled
+2021-05-23 14:43:32.5177 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:43:32.6237 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:43:32.7699 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:44:22.1830 Info Message Template Auto Format enabled
+2021-05-23 14:44:22.2592 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:44:22.3785 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:44:22.5409 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:45:06.0070 Info Message Template Auto Format enabled
+2021-05-23 14:45:06.0820 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:45:06.1916 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:45:06.3503 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:45:42.1346 Info Message Template Auto Format enabled
+2021-05-23 14:45:42.2055 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:45:42.3086 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:45:42.4883 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:47:45.9802 Info Message Template Auto Format enabled
+2021-05-23 14:47:46.0539 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:47:46.1650 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:47:46.3319 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:49:08.7474 Info Message Template Auto Format enabled
+2021-05-23 14:49:08.8249 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:49:08.9415 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:49:09.0970 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:49:54.2915 Info Message Template Auto Format enabled
+2021-05-23 14:49:54.3622 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:49:54.4775 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:49:54.6459 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:50:41.3963 Info Message Template Auto Format enabled
+2021-05-23 14:50:41.4866 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:50:41.6068 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:50:41.7802 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:52:00.1101 Info Message Template Auto Format enabled
+2021-05-23 14:52:00.1826 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:52:00.3022 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:52:00.4480 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:52:47.5624 Info Message Template Auto Format enabled
+2021-05-23 14:52:47.6378 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:52:47.7432 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:52:47.8858 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:53:23.1197 Info Message Template Auto Format enabled
+2021-05-23 14:53:23.1994 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:53:23.3071 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:53:23.4772 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:55:16.3525 Info Message Template Auto Format enabled
+2021-05-23 14:55:16.4592 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:55:16.5681 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:55:16.7360 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:58:32.1432 Info Message Template Auto Format enabled
+2021-05-23 14:58:32.2265 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:58:32.3292 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:58:32.4967 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 14:59:30.8188 Info Message Template Auto Format enabled
+2021-05-23 14:59:30.8956 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 14:59:31.0104 Info Adding target FileTarget(Name=alldata)
+2021-05-23 14:59:31.1651 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 15:01:03.8963 Info Message Template Auto Format enabled
+2021-05-23 15:01:03.9822 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 15:01:04.1040 Info Adding target FileTarget(Name=alldata)
+2021-05-23 15:01:04.2818 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 15:02:17.5198 Info Message Template Auto Format enabled
+2021-05-23 15:02:17.5939 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 15:02:17.6972 Info Adding target FileTarget(Name=alldata)
+2021-05-23 15:02:17.8631 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config
+2021-05-23 15:06:01.3302 Info Message Template Auto Format enabled
+2021-05-23 15:06:01.4297 Info Loading assembly: NLog.Web.AspNetCore
+2021-05-23 15:06:01.5318 Info Adding target FileTarget(Name=alldata)
+2021-05-23 15:06:01.7198 Info Validating config: TargetNames=alldata, ConfigItems=19, FilePath=C:\Users\tautv\Documents\repos\PSKapi\src\FlowerShop.Web\bin\Debug\net5.0\nlog.config

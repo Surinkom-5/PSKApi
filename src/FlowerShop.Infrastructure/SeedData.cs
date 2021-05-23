@@ -7,37 +7,44 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FlowerShop.Infrastructure.Config;
+using Microsoft.Extensions.Options;
 
 namespace FlowerShop.Infrastructure
 {
     public static class SeedData
     {
+        private static string _imageBaseUrl;
+
         private static readonly List<string> ImageUrls = new ()
         {
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/rose.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/lilly.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696629/tulip.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696629/white_rose.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621695939/sunflower.webp",
+            "v1621696628/rose.jpg",
+            "v1621696628/lilly.jpg",
+            "v1621696629/tulip.jpg",
+            "v1621696629/white_rose.jpg",
+            "v1621695939/sunflower.webp",
 
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/bouquet_1.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621011506/bouquet_2.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/bouquet_3.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621696628/bouquet_4.jpg",
+            "v1621696628/bouquet_1.jpg",
+            "v1621011506/bouquet_2.jpg",
+            "v1621696628/bouquet_3.jpg",
+            "v1621696628/bouquet_4.jpg",
 
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/cactus_small.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/cactus_medium.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697520/papartis.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/begonia_g0y463.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/katil%C4%97lis_u1gica.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/raktazole_wnwjvk.jpg",
-            "https://res.cloudinary.com/dzpfau9nh/image/upload/v1621697499/kalanke.jpg"
+            "v1621697499/cactus_small.jpg",
+            "v1621697499/cactus_medium.jpg",
+            "v1621697520/papartis.jpg",
+            "v1621697499/begonia_g0y463.jpg",
+            "v1621697499/katil%C4%97lis_u1gica.jpg",
+            "v1621697499/raktazole_wnwjvk.jpg",
+            "v1621697499/kalanke.jpg"
         };
 
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using var dbContext = new AppDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>());
+
+            var imageUrlBase = serviceProvider.GetService<ImageConfig>();
+            _imageBaseUrl = imageUrlBase.ImageBaseUrl;
 
             SeedDatabase(dbContext);
         }
@@ -109,7 +116,7 @@ namespace FlowerShop.Infrastructure
 
             for (var i = 0; i < products.Count; i++)
             {
-                products[i].SetImageUrl(ImageUrls[i]);
+                products[i].SetImageUrl(_imageBaseUrl + ImageUrls[i]);
             }
 
             dbContext.Products.AddRange(products);

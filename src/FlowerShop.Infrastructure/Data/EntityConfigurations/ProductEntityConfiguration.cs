@@ -27,6 +27,9 @@ namespace FlowerShop.Infrastructure.Data.Config
 
             builder.Property(x => x.ImageUrl)
                 .HasMaxLength(256);
+
+            builder.Property(x => x.Timestamp)
+                .IsRowVersion();
         }
     }
 }

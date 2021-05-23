@@ -77,11 +77,11 @@ namespace FlowerShop.Infrastructure
                     ProductType.Flower),
                 new Product("Lelija", 5.49m, "lelijinių (Liliaceae) šeimos augalų gentis, kuriai priklauso daugiametės svogūninės žolės, turinčios kiaušiniškus svogūnus ir stačius lapuotus stiebus. Lapai dažniausiai siauri, bekočiai. Žiedai įvairių spalvų ir dydžio, vienų rūšių nusvirę, kitų statūs, sukrauti kekėse ar išaugę pavieniui.",
                     ProductType.Flower),
-                new Product("Tulip ", 4.99m, "lelijinių augalų (Liliaceae) gentis. Joms būdingi dideli šešių žiedlapių žiedai. Iš viso yra apie 100 rūšių, Lietuvoje auginamos tik kaip dekoratyviniai augalai. Tulpės kilusios iš pietų Europos, Šiaurės Afrikos ir Azijos ",
+                new Product("Tulpė ", 4.99m, "Lelijinių augalų (Liliaceae) gentis. Joms būdingi dideli šešių žiedlapių žiedai. Iš viso yra apie 100 rūšių, Lietuvoje auginamos tik kaip dekoratyviniai augalai. Tulpės kilusios iš pietų Europos, Šiaurės Afrikos ir Azijos ",
                     ProductType.Flower),
                 new Product("Baltoji rožė", 9.99m, "Rožės dažnai laikomos dieviškumo, tobulo grožio, o raudonosios – meilės simboliu. Vakarų pasaulyje rožė laikoma kilmingiausia gėle. Jos atskirai ar puokštėse dovanojamos įvairiomis progomis.", 
                     ProductType.Flower),
-                new Product("Saulėgraža", 7.99m, "dideli žiedynai atrodo kaip saulė; be to, jie dažniausiai būna pasisukę į saulės pusę.", 
+                new Product("Saulėgrąža", 7.99m, "Dideli žiedynai atrodo kaip saulė; be to, jie dažniausiai būna pasisukę į saulės pusę.", 
                     ProductType.Flower),
 
                 // Bouquets

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FlowerShop.Infrastructure.Config;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure
 {
@@ -46,24 +47,24 @@ namespace FlowerShop.Infrastructure
             var imageUrlBase = serviceProvider.GetService<ImageConfig>();
             _imageBaseUrl = imageUrlBase.ImageBaseUrl;
 
-            SeedDatabase(dbContext);
+            Task.Run(() => SeedDatabaseAsync(dbContext)).Wait();
         }
 
-        public static void SeedDatabase(AppDbContext dbContext)
+        public static async Task SeedDatabaseAsync(AppDbContext dbContext)
         {
             foreach (var item in dbContext.Products)
             {
                 dbContext.Remove(item);
             }
 
-            SeedProducts(dbContext);
-            SeedRoles(dbContext);
-            SeedUsers(dbContext);
-            SeedAddresses(dbContext);
-            CreateFullTextCatalog(dbContext);
+            await SeedProductsAsync(dbContext);
+            await SeedRolesAsync(dbContext);
+            await SeedUsersAsync(dbContext);
+            await SeedAddressesAsync(dbContext);
+            await CreateFullTextCatalogAsync(dbContext);
         }
 
-        private static void SeedProducts(AppDbContext dbContext)
+        private static async Task SeedProductsAsync(AppDbContext dbContext)
         {
             if (dbContext.Products.Any())
             {
@@ -121,10 +122,10 @@ namespace FlowerShop.Infrastructure
 
             dbContext.Products.AddRange(products);
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
-        private static void SeedUsers(AppDbContext dbContext)
+        private static async Task SeedUsersAsync(AppDbContext dbContext)
         {
             if (dbContext.ApplicationUsers.Any())
             {
@@ -141,7 +142,7 @@ namespace FlowerShop.Infrastructure
             userIdentity.PasswordHash = ph.HashPassword(ownerIdentity, "user");
             dbContext.Users.Add(userIdentity);
             dbContext.Users.Add(ownerIdentity);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             dbContext.UserRoles.Add(new IdentityUserRole<string>() { UserId = ownerIdentity.Id, RoleId = ownerRoleId.ToString() });
             var user = new User("user", "user@mail.com");
@@ -152,10 +153,10 @@ namespace FlowerShop.Infrastructure
             dbContext.ApplicationUsers.Add(user);
             dbContext.ApplicationUsers.Add(ownerAppUser);
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
-        private static void SeedRoles(AppDbContext dbContext)
+        private static async Task SeedRolesAsync(AppDbContext dbContext)
         {
             if (dbContext.Roles.Any())
             {
@@ -168,10 +169,10 @@ namespace FlowerShop.Infrastructure
                 NormalizedName = "OWNER"
             });
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
-        private static void SeedAddresses(AppDbContext dbContext)
+        private static async Task SeedAddressesAsync(AppDbContext dbContext)
         {
             if (dbContext.Addresses.Any())
             {
@@ -184,19 +185,19 @@ namespace FlowerShop.Infrastructure
 
             dbContext.Addresses.AddRange(addresses);
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
-        private static void CreateFullTextCatalog(AppDbContext dbContext)
+        private static async Task CreateFullTextCatalogAsync(AppDbContext dbContext)
         {
             const string sql = "IF NOT EXISTS (SELECT 1 FROM sys.fulltext_catalogs WHERE[name] = 'Search')" +
                 " BEGIN" +
                 "   CREATE FULLTEXT CATALOG Search WITH ACCENT_SENSITIVITY = OFF" +
                 "   CREATE FULLTEXT INDEX ON dbo.Products(name) KEY INDEX PK_Products ON Search" +
                 " END";
-            dbContext.Database.ExecuteSqlRawAsync(sql);
+            await dbContext.Database.ExecuteSqlRawAsync(sql);
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
     }
 }

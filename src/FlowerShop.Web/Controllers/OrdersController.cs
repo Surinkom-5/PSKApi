@@ -69,7 +69,7 @@ namespace FlowerShop.Web.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "Exception Occured in Order Controller, get orders by user id");
-                return BadRequest();
+                return BadRequest("Unexpected error occured");
             }
         }
 
@@ -83,10 +83,10 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                Order result;
                 if (User.Identity.IsAuthenticated)
                 {
-                    result = await _orderService.CreateOrder(body.ToCreateOrderModel(User.Identity.GetUserId()));
+                    var result = await _orderService.CreateOrder(body.ToCreateOrderModel(User.Identity.GetUserId()));
+                    return result.Success ? Ok() : BadRequest(result.Error);
                 }
                 else
                 {
@@ -99,15 +99,14 @@ namespace FlowerShop.Web.Controllers
 
                     var cartCookie = headerValues.FirstOrDefault();
 
-                    result = await _orderService.CreateOrder(body.ToCreateOrderModel(null, Guid.Parse(cartCookie)));
+                    var result = await _orderService.CreateOrder(body.ToCreateOrderModel(null, Guid.Parse(cartCookie)));
+                    return result.Success ? Ok() : BadRequest(result.Error);
                 }
-
-                return result is null ? BadRequest() : Ok(OrderViewModel.ToModel(result));
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Exception Occurred in Order Controller, create order");
-                return BadRequest();
+                return BadRequest("Unexpected error occured");
             }
         }
 
@@ -129,7 +128,7 @@ namespace FlowerShop.Web.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "Exception Occurred in Order Controller, create order");
-                return BadRequest();
+                return BadRequest("Unexpected error occured");
             }
         }
     }

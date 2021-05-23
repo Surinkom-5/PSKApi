@@ -1,12 +1,12 @@
 ﻿using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.CustomModels;
 using FlowerShop.Infrastructure.Data;
+using FlowerShop.Infrastructure.Models;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,7 +37,7 @@ namespace FlowerShop.Infrastructure.Services
             _cartItemService = cartItemService;
         }
 
-        public async Task<Order> CreateOrderAsync(CreateOrderModel orderModel)
+        public async Task<CreateOrderResponse> CreateOrderAsync(CreateOrderModel orderModel)
         {
             await using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -50,7 +50,7 @@ namespace FlowerShop.Infrastructure.Services
                 }
                 if (cart.CartItems == null || cart.CartItems.Count <= 0)
                 {
-                    throw new ArgumentException("Cart items must can't be empty or null");
+                    return new CreateOrderResponse("Cart items cannot be empty.");
                 }
 
                 await _cartItemService.ReduceProductAvailabilityAsync(cart.CartItems.ToList());
@@ -78,13 +78,13 @@ namespace FlowerShop.Infrastructure.Services
                 await UpdateOrderItemsFromCart(order.OrderId, cart);
 
                 await transaction.CommitAsync();
-                return createdOrder.Entity;
+                return new CreateOrderResponse(createdOrder.Entity.OrderId);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, "Exception occurred in OrderService: CreateOrder");
                 await transaction.RollbackAsync();
-                return null;
+                return new CreateOrderResponse("Failed to create order.");
             }
         }
 

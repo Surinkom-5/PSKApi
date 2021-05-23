@@ -18,6 +18,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using FlowerShop.Infrastructure.Config;
 
 namespace FlowerShop.Web
 {
@@ -43,13 +44,24 @@ namespace FlowerShop.Web
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:3000");
+                        builder.WithOrigins("http://localhost:57678")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
-
+            
             services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+
+            var imageConfig = new ImageConfig
+            {
+                ImageBaseUrl = Configuration.GetSection("Urls:ImageBaseUrl").Value
+            };
+            services.AddSingleton(imageConfig);
 
             services.AddAuthentication(options =>
             {

@@ -19,7 +19,7 @@ namespace FlowerShop.Infrastructure.Data.Config
                .IsRequired();
 
             builder.Property(x => x.Description)
-               .HasMaxLength(512)
+               .HasMaxLength(2048)
                .IsRequired();
 
             builder.Property(x => x.AvailabilityCount)

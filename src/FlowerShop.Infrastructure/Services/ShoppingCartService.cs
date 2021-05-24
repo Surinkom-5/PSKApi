@@ -37,7 +37,7 @@ namespace FlowerShop.Infrastructure.Services
             try
             {
                 // If a cart already exists - get it and return
-                var existingCart = await _shoppingCartRepository.GetCartByUserId(userId);
+                var existingCart = await _shoppingCartRepository.GetCartWithItemsByUserIdAsync(userId);
                 if (existingCart != null) return existingCart;
 
                 // Else-wise create a new cart for given user
@@ -59,10 +59,6 @@ namespace FlowerShop.Infrastructure.Services
             await using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                var cart = await _dbContext.Carts.FindAsync(Guid.Parse(cartId));
-                var cartItem = new CartItem(cart.Id, itemId, quantity);
-                var result = await _dbContext.CartItems.AddAsync(cartItem);
-
                 var product = await _productRepository.GetProductByIdAsync(itemId);
 
                 if (product == null)
@@ -70,12 +66,25 @@ namespace FlowerShop.Infrastructure.Services
                     return false;
                 }
 
-                cart.SetPrice(product.Price + cart.Price);
+                var cart = await _shoppingCartRepository.GetCartWithItemsByPublicIdAsync(Guid.Parse(cartId).ToString());
+                if(cart.CartItems.Any(x => x.ProductId == itemId))
+                {
+                    var cartItem = cart.CartItems.First(x => x.ProductId == itemId);
+                    cartItem.SetQuantity(quantity);
+                    cart.UpdateCartPrice();
+                    cart.SetPrice(product.Price * quantity + cart.Price);
+                }
+                else
+                {
+                    var cartItem = new CartItem(cart.Id, itemId, quantity);
+                    await _dbContext.CartItems.AddAsync(cartItem);
+                    cart.SetPrice(product.Price * quantity + cart.Price);
+                }
                 _dbContext.Carts.Update(cart);
                 await _dbContext.SaveChangesAsync();
 
                 await transaction.CommitAsync();
-                return result != null;
+                return true;
             }
             catch (Exception e)
             {

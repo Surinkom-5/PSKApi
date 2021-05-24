@@ -24,7 +24,10 @@ namespace FlowerShop.Infrastructure.Repositories
 
         public async Task<Cart> GetCartWithItemsByPublicIdAsync(string id)
         {
-            var cart = await _dbContext.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.Id.ToString() == id);
+            var cart = await _dbContext.Carts
+                .Include(c => c.CartItems)
+                    .ThenInclude(p => p.Product)
+                .FirstOrDefaultAsync(c => c.Id.ToString() == id);
             if (cart == null) return null;
             return cart;
         }
@@ -38,7 +41,10 @@ namespace FlowerShop.Infrastructure.Repositories
 
         public async Task<Cart> GetCartWithItemsByUserIdAsync(int id)
         {
-            var cart = await _dbContext.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.UserId == id);
+            var cart = await _dbContext.Carts
+                .Include(c => c.CartItems)
+                    .ThenInclude(p => p.Product)
+                .FirstOrDefaultAsync(c => c.UserId == id);
             if (cart == null) return null;
             return cart;
         }

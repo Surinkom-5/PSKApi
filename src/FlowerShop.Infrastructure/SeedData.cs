@@ -4,11 +4,10 @@ using FlowerShop.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FlowerShop.Infrastructure.Config;
-using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace FlowerShop.Infrastructure
@@ -17,7 +16,7 @@ namespace FlowerShop.Infrastructure
     {
         private static string _imageBaseUrl;
 
-        private static readonly List<string> ImageUrls = new ()
+        private static readonly List<string> ImageUrls = new()
         {
             "v1621696628/rose.jpg",
             "v1621696628/lilly.jpg",
@@ -44,18 +43,13 @@ namespace FlowerShop.Infrastructure
             using var dbContext = new AppDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>());
 
-            var imageUrlBase = serviceProvider.GetService<ImageConfig>();
-            _imageBaseUrl = imageUrlBase.ImageBaseUrl;
+            _imageBaseUrl = serviceProvider.GetService<IOptions<ImageConfig>>().Value.ImageBaseUrl;
 
             Task.Run(() => SeedDatabaseAsync(dbContext)).Wait();
         }
 
         public static async Task SeedDatabaseAsync(AppDbContext dbContext)
         {
-            foreach (var item in dbContext.Products)
-            {
-                dbContext.Remove(item);
-            }
 
             await SeedProductsAsync(dbContext);
             await SeedRolesAsync(dbContext);
@@ -80,9 +74,9 @@ namespace FlowerShop.Infrastructure
                     ProductType.Flower),
                 new Product("Tulpė ", 4.99m, "Lelijinių augalų (Liliaceae) gentis. Joms būdingi dideli šešių žiedlapių žiedai. Iš viso yra apie 100 rūšių, Lietuvoje auginamos tik kaip dekoratyviniai augalai. Tulpės kilusios iš pietų Europos, Šiaurės Afrikos ir Azijos ",
                     ProductType.Flower),
-                new Product("Baltoji rožė", 9.99m, "Rožės dažnai laikomos dieviškumo, tobulo grožio, o raudonosios – meilės simboliu. Vakarų pasaulyje rožė laikoma kilmingiausia gėle. Jos atskirai ar puokštėse dovanojamos įvairiomis progomis.", 
+                new Product("Baltoji rožė", 9.99m, "Rožės dažnai laikomos dieviškumo, tobulo grožio, o raudonosios – meilės simboliu. Vakarų pasaulyje rožė laikoma kilmingiausia gėle. Jos atskirai ar puokštėse dovanojamos įvairiomis progomis.",
                     ProductType.Flower),
-                new Product("Saulėgrąža", 7.99m, "Dideli žiedynai atrodo kaip saulė; be to, jie dažniausiai būna pasisukę į saulės pusę.", 
+                new Product("Saulėgrąža", 7.99m, "Dideli žiedynai atrodo kaip saulė; be to, jie dažniausiai būna pasisukę į saulės pusę.",
                     ProductType.Flower),
 
                 // Bouquets

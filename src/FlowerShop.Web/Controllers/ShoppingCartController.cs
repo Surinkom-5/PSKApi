@@ -49,7 +49,7 @@ namespace FlowerShop.Web.Controllers
                 if (Request.Headers.TryGetValue(CookieConstants.CartCookie, out StringValues headerValues))
                 {
                     var cartCookie = headerValues.FirstOrDefault();
-                    var cart = await _shoppingCartRepository.GetCartByPublicIdAsync(cartCookie);
+                    var cart = await _shoppingCartRepository.GetCartWithItemsByPublicIdAsync(cartCookie);
 
                     return cart is null ? NotFound() : Ok(CartViewModel.ToModel(cart));
                 }

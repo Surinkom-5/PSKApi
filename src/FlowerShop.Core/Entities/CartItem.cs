@@ -23,6 +23,8 @@ namespace FlowerShop.Core.Entities
             Quantity = quantity;
         }
 
+        public void SetQuantity(int quantity) => Quantity = quantity;
+
         public static List<OrderItem> ToOrderItems(List<CartItem> cartItems, int orderId)
         {
             return cartItems.Select(i => new OrderItem(i.Quantity, orderId, i.ProductId)).ToList();

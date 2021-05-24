@@ -109,13 +109,11 @@ namespace FlowerShop.Web
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ICartItemService, CartItemService>();
 
-            services.AddSingleton<IOrderCreatorServiceFactory, OrderCreatorServiceFactory>();
+            services.AddScoped<IOrderCreatorServiceFactory, OrderCreatorServiceFactory>();
 
-            services.AddScoped<AnonymousOrderCreatorStrategy>()
-                .AddScoped<IOrderCreatorStrategy, AnonymousOrderCreatorStrategy>(s => s.GetService<AnonymousOrderCreatorStrategy>());
+            services.AddScoped<IOrderCreatorStrategy, AnonymousOrderCreatorStrategy>();
 
-            services.AddScoped<RegularOrderCreatorStrategy>()
-                .AddScoped<IOrderCreatorStrategy, RegularOrderCreatorStrategy>(s => s.GetService<RegularOrderCreatorStrategy>());
+            services.AddScoped<IOrderCreatorStrategy, RegularOrderCreatorStrategy>();
 
             //Used by nlog to get user identity
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

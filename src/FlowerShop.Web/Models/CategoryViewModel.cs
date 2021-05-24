@@ -1,9 +1,6 @@
 ﻿using FlowerShop.Core.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using FlowerShop.Core.Entities;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FlowerShop.Web.Models
 {

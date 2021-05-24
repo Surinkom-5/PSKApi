@@ -25,5 +25,13 @@ namespace FlowerShop.Core.Entities
         public void SetPrice(decimal price) => Price = price;
 
         public void SetUser(int id) => UserId = id;
+
+        public void UpdateCartPrice()
+        {
+            foreach (var item in _cartItems)
+            {
+                SetPrice(Price + item.Product.Price * item.Quantity);
+            }
+        }
     }
 }

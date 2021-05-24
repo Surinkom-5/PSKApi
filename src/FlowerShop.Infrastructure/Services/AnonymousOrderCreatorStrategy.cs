@@ -46,7 +46,7 @@ namespace FlowerShop.Infrastructure.Services
                 var cart = await _shoppingCartRepository.GetCartWithItemsByPublicIdAsync(orderModel.CartId.ToString());
                 if (cart is null)
                 {
-                    throw new ArgumentNullException(nameof(cart));
+                    return new CreateOrderResponse("Cart not found.");
                 }
                 if (cart.CartItems == null || cart.CartItems.Count <= 0)
                 {

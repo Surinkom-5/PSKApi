@@ -4,7 +4,6 @@ using FlowerShop.Infrastructure.Data;
 using FlowerShop.Infrastructure.Models;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -42,7 +41,12 @@ namespace FlowerShop.Infrastructure.Services
                 var cart = await _shoppingCartRepository.GetCartWithItemsByUserIdAsync(orderModel.UserId.Value);
                 if (cart is null)
                 {
-                    throw new ArgumentNullException(nameof(cart));
+                    cart = await _shoppingCartRepository.GetCartWithItemsByPublicIdAsync(orderModel.CartId.ToString());
+                    if (cart is null)
+                    {
+                        return new CreateOrderResponse("User has no cart.");
+                    }
+                    cart.SetUser(orderModel.UserId.Value);
                 }
                 if (cart.CartItems == null || cart.CartItems.Count <= 0)
                 {

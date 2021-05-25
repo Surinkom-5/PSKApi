@@ -26,5 +26,10 @@ namespace FlowerShop.Infrastructure.Repositories
         {
             return await _dbContext.Orders.Where(o => o.UserId == userId).ToListAsync();
         }
+
+        public async Task<List<Order>> GetAllOrders()
+        {
+            return await _dbContext.Orders.ToListAsync();
+        }
     }
 }

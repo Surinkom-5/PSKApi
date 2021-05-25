@@ -32,6 +32,28 @@ namespace FlowerShop.Web.Controllers
         }
 
         /// <summary>
+        /// Gets all orders
+        /// </summary>
+        /// <returns>A list of orders</returns>
+        [HttpGet("owner")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            try
+            {
+                if (!User.Identity.IsAuthenticated && !User.IsInRole("Owner")) return StatusCode(401);
+                    
+                var orders = await _orderRepository.GetAllOrders();
+
+                return orders is null ? NotFound() : Ok(OrderViewModel.ToModel(orders));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occured in Order Controller, get order by order id");
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
         /// Gets order by provided order Id
         /// </summary>
         /// <param name="orderId"></param>

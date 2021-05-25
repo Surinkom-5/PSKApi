@@ -13,6 +13,7 @@ namespace FlowerShop.Web.Models
         public OrderStatus OrderStatus { get; set; }
         public int? AddressId { get; set; }
         public int? UserId { get; set; }
+        public IEnumerable<OrderItemViewModel> OrderItems { get; set; }
 
         public static OrderViewModel ToModel(Order order)
         {
@@ -23,7 +24,8 @@ namespace FlowerShop.Web.Models
                 Comment = order.Comment,
                 OrderStatus = order.OrderStatus,
                 AddressId = order.AddressId,
-                UserId = order.UserId
+                UserId = order.UserId,
+                OrderItems = OrderItemViewModel.ToModel(order.OrderItems.ToList())
             };
         }
 

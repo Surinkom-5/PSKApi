@@ -104,7 +104,6 @@ namespace FlowerShop.Web.Controllers
         /// Request must contain cartCookie
         /// </summary>
         /// <param name="itemId"></param>
-        /// <param name="quantity"></param>
         /// <returns></returns>
         [HttpDelete("{itemId}")]
         public async Task<IActionResult> RemoveItemFromCart([FromRoute] int itemId)

@@ -74,7 +74,7 @@ namespace FlowerShop.Infrastructure.Services
             {
                 _logger.LogError(e, "Exception occurred in OrderService: CreateOrder");
                 await transaction.RollbackAsync();
-                return null;
+                return new CreateOrderResponse("Exception occurred in OrderService: CreateOrder");
             }
         }
 

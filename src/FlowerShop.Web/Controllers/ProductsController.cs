@@ -127,6 +127,11 @@ namespace FlowerShop.Web.Controllers
                 var response = await _productService.UpdateProductAsync(productId, productPatch.Name, productPatch.Price,
                     productPatch.Description, productPatch.Quantity, productPatch.Version);
 
+                if (response.IsConcurrencyError)
+                {
+                    return Conflict(response.Error);
+                }
+
                 return response.Success ? Ok() : BadRequest(response.Error);
             }
             catch (Exception e)

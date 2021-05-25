@@ -54,6 +54,10 @@ namespace FlowerShop.Web
 
             services.AddDbContext(Configuration.GetConnectionString("DefaultConnection"));
 
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+
             services.Configure<JwtConfig>(Configuration.GetSection(nameof(JwtConfig)));
             services.Configure<ImageConfig>(Configuration.GetSection(nameof(ImageConfig)));
 

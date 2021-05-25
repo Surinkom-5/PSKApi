@@ -1,5 +1,4 @@
 ﻿using FlowerShop.Core.Constants;
-using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Api;
@@ -7,6 +6,7 @@ using FlowerShop.Web.Extensions;
 using FlowerShop.Web.Models;
 using FlowerShop.Web.Patch;
 using FlowerShop.Web.Post;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -29,6 +29,27 @@ namespace FlowerShop.Web.Controllers
             _orderRepository = orderRepository;
             _logger = logger;
             _orderService = orderService;
+        }
+
+        /// <summary>
+        /// Gets all orders
+        /// </summary>
+        /// <returns>A list of orders</returns>
+        [Authorize(Roles = RoleConstants.Owner)]
+        [HttpGet("ForOwner")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            try
+            {
+                var orders = await _orderRepository.GetAllOrders();
+
+                return orders is null ? NotFound() : Ok(OrderViewModel.ToModel(orders));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occured in Order Controller, get order by order id");
+                return BadRequest();
+            }
         }
 
         /// <summary>

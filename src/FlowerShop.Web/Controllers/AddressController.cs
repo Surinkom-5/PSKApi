@@ -1,4 +1,5 @@
-﻿using FlowerShop.Infrastructure;
+﻿using FlowerShop.Core.Constants;
+using FlowerShop.Infrastructure;
 using FlowerShop.Infrastructure.Services;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Extensions;
@@ -41,6 +42,27 @@ namespace FlowerShop.Web.Controllers
                 var addresses = await _addressRepository.GetUserAddressesAsync(User.Identity.GetUserId());
 
                 return Ok(AddressViewModel.ToModel(addresses));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception Occured in Address Controller, get address by address id");
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Gets user addresses
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = RoleConstants.Owner)]
+        [HttpGet("{addressId}")]
+        public async Task<IActionResult> GetUserAddress([FromRoute]int addressId)
+        {
+            try
+            {
+                var address = await _addressRepository.GetAddressByIdAsync(id);
+
+                return address is null ? NotFound() : Ok(AddressViewModel.ToModel(address));
             }
             catch (Exception e)
             {

@@ -53,9 +53,9 @@ namespace FlowerShop.Infrastructure.Services
             {
                 var userId = await _userService.AddUserAsync(name, email);
 
-                var jwtToken = GenerateJwtToken(newUser, userId.ToString());
+                var jwtToken = GenerateJwtTokenAsync(newUser, userId.ToString());
 
-                return new RegistrationResponse() { Token = jwtToken };
+                return new RegistrationResponse() { Token = await jwtToken };
             }
 
             return new RegistrationResponse() { Errors = isCreated.Errors.Select(x => x.Description).ToList() };
@@ -75,7 +75,7 @@ namespace FlowerShop.Infrastructure.Services
             if (isCorrect)
             {
                 var user = await _userRepository.GetUserByEmailAsync(email);
-                var jwtToken = GenerateJwtToken(existingUser, user.UserId.ToString());
+                var jwtToken = await GenerateJwtTokenAsync(existingUser, user.UserId.ToString());
 
                 return (jwtToken, string.Empty);
             }
@@ -85,7 +85,7 @@ namespace FlowerShop.Infrastructure.Services
             }
         }
 
-        private string GenerateJwtToken(IdentityUser user, string userId)
+        private async Task<string> GenerateJwtTokenAsync(IdentityUser user, string userId)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -99,10 +99,15 @@ namespace FlowerShop.Infrastructure.Services
                 new Claim(ClaimsConstants.UserId, userId),
                 new Claim(ClaimTypes.Name, user.Email), //Used by nlog to track user
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            }),
+                }),
                 Expires = DateTime.UtcNow.AddHours(6),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
             };
+
+            if (await _userManager.IsInRoleAsync(user, RoleConstants.Owner))
+            {
+                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, RoleConstants.Owner));
+            }
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
 

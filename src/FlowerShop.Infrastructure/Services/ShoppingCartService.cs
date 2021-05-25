@@ -109,7 +109,7 @@ namespace FlowerShop.Infrastructure.Services
 
                 var result = _dbContext.CartItems.Remove(itemToDelete);
                 var product = await _productRepository.GetProductByIdAsync(itemId);
-                cart.SetPrice(cart.Price - product.Price);
+                cart.SetPrice(cart.Price - product.Price * itemToDelete.Quantity);
                 _dbContext.Carts.Update(cart);
                 await _dbContext.SaveChangesAsync();
 

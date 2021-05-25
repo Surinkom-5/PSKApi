@@ -19,12 +19,26 @@ namespace FlowerShop.Infrastructure.Repositories
 
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
-            return await _dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            var order = await _dbContext.Orders
+                .Include(c => c.OrderItems)
+                .FirstOrDefaultAsync(c => c.OrderId == orderId);
+
+            return order;
         }
 
         public async Task<List<Order>> GetOrdersByUserIdAsync(int userId)
         {
-            return await _dbContext.Orders.Where(o => o.UserId == userId).ToListAsync();
+            return await _dbContext.Orders
+                .Include(c => c.OrderItems)
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<List<Order>> GetAllOrders()
+        {
+            return await _dbContext.Orders
+                .Include(c => c.OrderItems)
+                .ToListAsync();
         }
     }
 }

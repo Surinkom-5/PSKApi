@@ -1,4 +1,5 @@
-﻿using FlowerShop.Infrastructure;
+﻿using FlowerShop.Core.Constants;
+using FlowerShop.Infrastructure;
 using FlowerShop.Infrastructure.Services;
 using FlowerShop.Web.Api;
 using FlowerShop.Web.Models;
@@ -95,6 +96,7 @@ namespace FlowerShop.Web.Controllers
         /// </summary>
         /// <param name="createProductModel"></param>
         /// <returns></returns>
+        [Authorize(Roles = RoleConstants.Owner)]
         [HttpPost]
         public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductModel createProductModel)
         {
@@ -116,6 +118,7 @@ namespace FlowerShop.Web.Controllers
         /// Update product details
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = RoleConstants.Owner)]
         [HttpPatch("{productId}")]
         public async Task<IActionResult> PatchProductDetails([FromRoute] int productId, [FromBody] ProductPatch productPatch)
         {
@@ -137,6 +140,7 @@ namespace FlowerShop.Web.Controllers
         /// Delete product
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = RoleConstants.Owner)]
         [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
         {

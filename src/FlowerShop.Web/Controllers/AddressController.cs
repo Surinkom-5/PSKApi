@@ -60,7 +60,7 @@ namespace FlowerShop.Web.Controllers
         {
             try
             {
-                var address = await _addressRepository.GetAddressByIdAsync(id);
+                var address = await _addressRepository.GetAddressByIdAsync(addressId);
 
                 return address is null ? NotFound() : Ok(AddressViewModel.ToModel(address));
             }

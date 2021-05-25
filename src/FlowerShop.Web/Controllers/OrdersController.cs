@@ -1,5 +1,4 @@
 ﻿using FlowerShop.Core.Constants;
-using FlowerShop.Core.Entities;
 using FlowerShop.Infrastructure.Repositories.Interfaces;
 using FlowerShop.Infrastructure.Services.Interfaces;
 using FlowerShop.Web.Api;
@@ -7,6 +6,7 @@ using FlowerShop.Web.Extensions;
 using FlowerShop.Web.Models;
 using FlowerShop.Web.Patch;
 using FlowerShop.Web.Post;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -35,13 +35,12 @@ namespace FlowerShop.Web.Controllers
         /// Gets all orders
         /// </summary>
         /// <returns>A list of orders</returns>
-        [HttpGet("owner")]
+        [Authorize(Roles = RoleConstants.Owner)]
+        [HttpGet("ForOwner")]
         public async Task<IActionResult> GetAllOrders()
         {
             try
             {
-                if (!User.Identity.IsAuthenticated && !User.IsInRole("Owner")) return StatusCode(401);
-                    
                 var orders = await _orderRepository.GetAllOrders();
 
                 return orders is null ? NotFound() : Ok(OrderViewModel.ToModel(orders));

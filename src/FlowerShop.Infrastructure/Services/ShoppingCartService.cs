@@ -61,7 +61,7 @@ namespace FlowerShop.Infrastructure.Services
             {
                 var product = await _productRepository.GetProductByIdAsync(itemId);
 
-                if (product == null)
+                if (product == null || product.AvailabilityCount <= 0 || quantity <= 0)
                 {
                     return false;
                 }

@@ -44,6 +44,15 @@ namespace FlowerShop.Infrastructure.Services
             {
                 return new UpdateProductResponse(false, "Product not found");
             }
+            if (quantity < 0)
+            {
+                return new UpdateProductResponse(false, "Invalid product quantity");
+            }
+            if (price <= 0)
+            {
+                return new UpdateProductResponse(false, "Invalid product price");
+            }
+
             try
             {
                 productToUpdate.UpdateProductDetails(name, price, description, quantity);
